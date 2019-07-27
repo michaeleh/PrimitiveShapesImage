@@ -8,5 +8,7 @@ public class PSOConstants {
     public static final String FILE_SPLIT_FORMAT = "\\.";
     public static final String IMAGE_FORMAT = "png";
     public static final String IMAGE_SUFFIX = "_primitive";
-    public static final int MAX_PARTICLES = 200;
+    static final int MAX_PARTICLES = 200;
+    static final int TIME_CAP = 1000;
+//    static final int TIME_CAP = 1000 * 60 * 5;
 }

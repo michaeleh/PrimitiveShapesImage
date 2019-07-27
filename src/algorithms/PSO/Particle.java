@@ -1,6 +1,7 @@
 package algorithms.PSO;
 
-import algorithms.IEvolutionaryAlgorithm;
+import algorithms.IEvolutionaryCycle;
+import algorithms.IEvolutionaryMemberConsiderBestFit;
 import shapes.AbstractVelocityShape;
 import shapes.EShapeType;
 
@@ -8,17 +9,18 @@ import java.awt.image.BufferedImage;
 
 import static algorithms.PSO.PSOConstants.MAX_SHAPES;
 
-public class Particle implements IEvolutionaryAlgorithm {
-    private final BufferedImage image;
+public class Particle implements IEvolutionaryMemberConsiderBestFit {
     private AbstractVelocityShape[] velocityShapes;
-    private int width, height;
+    private int width, height, imageType;
+    private int fitness;
+    private BufferedImage image;
 
-    Particle(int width, int height, int type, EShapeType shapeType) {
+    Particle(int width, int height, int imageType, EShapeType shapeType) {
         velocityShapes = new AbstractVelocityShape[MAX_SHAPES];
         for (int i = 0; i < MAX_SHAPES; i++) {
             velocityShapes[i] = new AbstractVelocityShape(shapeType);
         }
-        image = new BufferedImage(width, height, type);
+        this.imageType = imageType;
         this.width = width;
         this.height = height;
     }
@@ -37,7 +39,15 @@ public class Particle implements IEvolutionaryAlgorithm {
     }
 
     @Override
-    public void evolve() {
+    public void evolve(IEvolutionaryMemberConsiderBestFit bestFit) {
+        Particle particle = (Particle) bestFit;
+    }
 
+    int getFitness() {
+        return fitness;
+    }
+
+    BufferedImage getImage() {
+        return image;
     }
 }
