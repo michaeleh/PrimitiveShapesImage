@@ -1,10 +1,12 @@
 package algorithms.PSO;
 
-import algorithms.IEvolutionaryCycle;
 import algorithms.IEvolutionaryGroup;
 import shapes.EShapeType;
+import utils.ObserverLatch;
 
 import java.awt.image.BufferedImage;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 import static algorithms.PSO.PSOConstants.MAX_PARTICLES;
 
@@ -12,11 +14,14 @@ public class Swarm implements IEvolutionaryGroup {
     private Particle[] swarm;
     private HistoryBest historyBest;
     private Particle globalBestParticle;
+    private ExecutorService executor = Executors.newCachedThreadPool();
+    private ObserverLatch latch;
 
-    Swarm(int width, int height, int imgType, EShapeType shapeType) {
+    Swarm(BufferedImage original, EShapeType shapeType) {
         swarm = new Particle[MAX_PARTICLES];
+        latch = new ObserverLatch();
         for (int i = 0; i < MAX_PARTICLES; i++) {
-            swarm[i] = new Particle(width, height, imgType, shapeType);
+            swarm[i] = new Particle(original, shapeType, latch);
         }
 
         historyBest = new HistoryBest();
@@ -31,12 +36,19 @@ public class Swarm implements IEvolutionaryGroup {
 
     @Override
     public void calculateFitness() {
-        int globalBestFitness = 0;
+        latch.init(swarm.length);
+        for (Particle particle : swarm) {
+            executor.submit(particle::calculateFitness);
+        }
+        latch.await();
+        setBest();
+    }
+
+    private void setBest() {
+        double globalBestFitness = 0;
 
         for (Particle particle : swarm) {
-            particle.calculateFitness();
-            int fitness = particle.getFitness();
-
+            double fitness = particle.getFitness();
             if (fitness > globalBestFitness) {
                 globalBestFitness = fitness;
                 globalBestParticle = particle;
@@ -47,12 +59,16 @@ public class Swarm implements IEvolutionaryGroup {
 
     @Override
     public void evolve() {
-        for (Particle particle: swarm){
+        for (Particle particle : swarm) {
             particle.evolve(globalBestParticle);
         }
     }
 
     BufferedImage getTotalBest() {
         return historyBest.getImage();
+    }
+    void close(){
+        executor.shutdownNow();
+
     }
 }

@@ -2,11 +2,11 @@ package algorithms.PSO;
 
 import java.awt.image.BufferedImage;
 
-public class HistoryBest {
-    private int fitness;
+class HistoryBest {
+    private double fitness;
     private BufferedImage image;
 
-    public void setIfBest(int score, BufferedImage image) {
+    void setIfBest(double score, BufferedImage image) {
         if (fitness < score) {
             fitness = score;
             this.image = image;
@@ -14,7 +14,7 @@ public class HistoryBest {
         }
     }
 
-    public BufferedImage getImage() {
+    BufferedImage getImage() {
         return image;
     }
 }

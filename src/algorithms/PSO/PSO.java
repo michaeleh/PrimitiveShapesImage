@@ -13,7 +13,7 @@ public class PSO implements IEvolutionaryGroup, IOptimizationAlgorithm {
 
     @Override
     public BufferedImage recreateFromPrimitive(BufferedImage original, EShapeType shape) {
-        swarm = new Swarm(original.getWidth(), original.getHeight(), original.getType(), shape);
+        swarm = new Swarm(original, shape);
         init();
         long startTime = System.currentTimeMillis();
         BufferedImage image = null;
@@ -22,7 +22,7 @@ public class PSO implements IEvolutionaryGroup, IOptimizationAlgorithm {
             image = swarm.getTotalBest();
             swarm.evolve();
         }
-
+        swarm.close();
         return image;
     }
 
