@@ -1,5 +1,7 @@
 package properties;
 
+import utils.NumberUtils;
+
 public class CenterLocation implements ILocation<Integer> {
     private int x, y;
 
@@ -15,12 +17,12 @@ public class CenterLocation implements ILocation<Integer> {
 
     @Override
     public void setX(Integer x) {
-        this.x =x;
+        this.x = NumberUtils.clampCanvas(x);
     }
 
     @Override
     public void setY(Integer y) {
-        this.y = y;
+        this.y = NumberUtils.clampCanvas(y);
     }
 
     @Override

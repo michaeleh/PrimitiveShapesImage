@@ -1,5 +1,7 @@
 package properties;
 
+import utils.NumberUtils;
+
 public class Scale {
     private int value;
 
@@ -8,7 +10,7 @@ public class Scale {
     }
 
     public void setValue(int value) {
-        this.value = value;
+        this.value = NumberUtils.clampColor(value);
     }
 
     @Override

@@ -15,10 +15,9 @@ public class Circle extends AbstractShape<Integer> {
 
     @Override
     public void draw(Graphics2D graphics2D) {
-        if (isValid()) {
             graphics2D.setPaint(color.toObj());
             graphics2D.fillOval(location.getX(), location.getY(), scale.getValue(), scale.getValue());
-        }
+
     }
 
     private boolean isValid() {

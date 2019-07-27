@@ -1,6 +1,6 @@
 package properties;
 
-import static algorithms.PSO.PSOConstants.CHANNEL_MAX;
+import utils.NumberUtils;
 
 public class Color {
     private int red;
@@ -8,24 +8,24 @@ public class Color {
     private int blue;
     private int alpha;
 
-    public java.awt.Color toObj(){
-        return new java.awt.Color(red,green,blue,alpha);
+    public java.awt.Color toObj() {
+        return new java.awt.Color(red, green, blue, alpha);
     }
 
     public void setRed(int red) {
-        this.red  = red;
+        this.red = NumberUtils.clampColor(red);
     }
 
     public void setGreen(int green) {
-        this.green = green;
+        this.green = NumberUtils.clampColor(green);
     }
 
     public void setBlue(int blue) {
-        this.blue = blue;
+        this.blue = NumberUtils.clampColor(blue);
     }
 
     public void setAlpha(int alpha) {
-        this.alpha = alpha;
+        this.alpha = NumberUtils.clampColor(alpha);
     }
 
     public int getRed() {
@@ -55,6 +55,6 @@ public class Color {
     }
 
     public boolean isValid() {
-        return red > 0 && red < 255 && green > 0 && green < 255 && blue > 0 && blue< 255 && alpha > 0 && alpha < 255;
+        return red > 0 && red < 255 && green > 0 && green < 255 && blue > 0 && blue < 255 && alpha > 0 && alpha < 255;
     }
 }

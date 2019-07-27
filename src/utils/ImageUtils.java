@@ -38,16 +38,15 @@ public class ImageUtils {
                 diff += pixelDiff(img1.getRGB(x, y), img2.getRGB(x, y));
             }
         }
-        return Math.sqrt(diff / (4 * width * height));
+        return Math.sqrt(diff/(3 * width * height));
     }
 
-    private static int pixelDiff(int rgb1, int rgb2) {
+    private static long pixelDiff(int rgb1, int rgb2) {
         Color color1 = new Color(rgb1);
         Color color2 = new Color(rgb2);
-        return (int) (Math.pow(color1.getRed() - color2.getRed(), 2)
-                + Math.pow(color1.getGreen() - color2.getGreen(), 2)
-                + Math.pow(color1.getBlue() - color2.getBlue(), 2)
-                + Math.pow(color1.getAlpha() - color2.getAlpha(), 2));
+        return (long) (Math.pow(color1.getRed() - color2.getRed(),2)
+                        + Math.pow(color1.getGreen() - color2.getGreen(),2)
+                        + Math.pow(color1.getBlue() - color2.getBlue(),2));
     }
 
     public static void display(BufferedImage img) {
