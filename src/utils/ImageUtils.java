@@ -1,10 +1,11 @@
-package imageutils;
+package utils;
 
 import javax.imageio.ImageIO;
-import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+
+import static algorithms.PSO.PSOConstants.*;
 
 public class ImageUtils {
     private String imgPath;
@@ -18,9 +19,9 @@ public class ImageUtils {
     }
 
     public void writeImage(BufferedImage image) throws IOException {
-        String[] nameSplit = imgPath.split("\\.");
-        String name = nameSplit[0]+"_primitive";
+        String[] nameSplit = imgPath.split(FILE_SPLIT_FORMAT);
+        String name = nameSplit[0] + IMAGE_SUFFIX;
         String format = nameSplit[1];
-        ImageIO.write(image,"png",new File(name+".png"));
+        ImageIO.write(image, IMAGE_FORMAT, new File(name + "." + IMAGE_FORMAT));
     }
 }

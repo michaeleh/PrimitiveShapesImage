@@ -16,9 +16,16 @@ public abstract class AbstractShape<T> {
         return location;
     }
 
+    public Color getColor() {
+        return color;
+    }
+
+
     public Scale getScale() {
         return scale;
     }
 
     public abstract void draw(Graphics2D graphics2D);
+
+    public abstract void init(int width, int height);
 }

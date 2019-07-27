@@ -1,6 +1,6 @@
 import algorithms.EOptimizationTypes;
 import algorithms.IOptimizationAlgorithm;
-import imageutils.ImageUtils;
+import utils.ImageUtils;
 import shapes.EShapeType;
 
 import java.awt.image.BufferedImage;
