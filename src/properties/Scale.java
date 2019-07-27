@@ -10,4 +10,15 @@ public class Scale {
     public void setValue(int value) {
         this.value = value;
     }
+
+    @Override
+    public String toString() {
+        return "Scale{" +
+                "value=" + value +
+                '}';
+    }
+
+    public boolean isValid() {
+        return value < 400 && value > 0;
+    }
 }

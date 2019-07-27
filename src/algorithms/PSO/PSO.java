@@ -3,6 +3,7 @@ package algorithms.PSO;
 import algorithms.IEvolutionaryGroup;
 import algorithms.IOptimizationAlgorithm;
 import shapes.EShapeType;
+import utils.ImageUtils;
 
 import java.awt.image.BufferedImage;
 
@@ -17,10 +18,13 @@ public class PSO implements IEvolutionaryGroup, IOptimizationAlgorithm {
         init();
         long startTime = System.currentTimeMillis();
         BufferedImage image = null;
+        int iteration = 1;
         while (System.currentTimeMillis() - startTime < TIME_CAP) {
-            swarm.calculateFitness();
+            System.out.println("Iteration: " + iteration++);
+            calculateFitness();
             image = swarm.getTotalBest();
-            swarm.evolve();
+            ImageUtils.display(image);
+            evolve();
         }
         swarm.close();
         return image;

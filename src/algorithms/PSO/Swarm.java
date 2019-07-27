@@ -13,7 +13,6 @@ import static algorithms.PSO.PSOConstants.MAX_PARTICLES;
 public class Swarm implements IEvolutionaryGroup {
     private Particle[] swarm;
     private HistoryBest historyBest;
-    private Particle globalBestParticle;
     private ExecutorService executor = Executors.newCachedThreadPool();
     private ObserverLatch latch;
 
@@ -23,7 +22,6 @@ public class Swarm implements IEvolutionaryGroup {
         for (int i = 0; i < MAX_PARTICLES; i++) {
             swarm[i] = new Particle(original, shapeType, latch);
         }
-
         historyBest = new HistoryBest();
     }
 
@@ -45,30 +43,25 @@ public class Swarm implements IEvolutionaryGroup {
     }
 
     private void setBest() {
-        double globalBestFitness = 0;
 
         for (Particle particle : swarm) {
             double fitness = particle.getFitness();
-            if (fitness > globalBestFitness) {
-                globalBestFitness = fitness;
-                globalBestParticle = particle;
-                historyBest.setIfBest(fitness, particle.getImage());
-            }
+            historyBest.setIfBest(fitness, particle);
         }
     }
 
     @Override
     public void evolve() {
         for (Particle particle : swarm) {
-            particle.evolve(globalBestParticle);
+            particle.evolve(historyBest.getBest());
         }
     }
 
     BufferedImage getTotalBest() {
-        return historyBest.getImage();
+        return swarm[27].getImage();
     }
-    void close(){
-        executor.shutdownNow();
 
+    void close() {
+        executor.shutdownNow();
     }
 }

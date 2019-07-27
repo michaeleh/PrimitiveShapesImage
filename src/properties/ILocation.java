@@ -5,4 +5,6 @@ public interface ILocation<T> {
     T getY();
     void setX(T x);
     void setY(T y);
+
+    boolean isValid();
 }

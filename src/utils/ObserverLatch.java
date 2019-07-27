@@ -12,7 +12,6 @@ public class ObserverLatch {
 
     public void countdown(){
         latch.countDown();
-        System.out.println(--index);
     }
 
     public void await(){
