@@ -1,31 +1,28 @@
 package algorithms.PSO;
 
 import algorithms.IEvolutionarySample;
-import shapes.AbstractVelocityShape;
 import shapes.EShapeType;
+import shapes.VelocityShape;
 import utils.ImageUtils;
 import utils.ObserverLatch;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;
-import java.util.Arrays;
 
-import static algorithms.PSO.PSOConstants.MAX_SHAPES;
 import static algorithms.PSO.PSOConstants.VELOCITY_FACTOR;
 
 public class Particle implements IEvolutionarySample {
     private final ObserverLatch latch;
     private final EShapeType shapeType;
-    private AbstractVelocityShape[] velocityShapes;
+    private VelocityShape velocityShape;
     private double fitness;
     private BufferedImage image, original;
     private Particle personalBest;
+    private BufferedImage previousImage;
 
-    Particle(BufferedImage original, EShapeType shapeType, ObserverLatch latch) {
-        velocityShapes = new AbstractVelocityShape[MAX_SHAPES];
-        for (int i = 0; i < MAX_SHAPES; i++) {
-            velocityShapes[i] = new AbstractVelocityShape(shapeType);
-        }
+    Particle(BufferedImage original, BufferedImage previousImage, EShapeType shapeType, ObserverLatch latch) {
+        velocityShape = new VelocityShape(shapeType);
+        this.previousImage = previousImage;
         this.shapeType = shapeType;
         this.original = original;
         this.latch = latch;
@@ -33,19 +30,15 @@ public class Particle implements IEvolutionarySample {
 
     @Override
     public void init() {
-        for (AbstractVelocityShape velocityShape : velocityShapes) {
-            velocityShape.getShape().init(original.getWidth(), original.getHeight());
-            velocityShape.getVelocity().init(original.getWidth(), original.getHeight(),VELOCITY_FACTOR);
-        }
+        velocityShape.getShape().init(original.getWidth(), original.getHeight());
+        velocityShape.getVelocity().init(original.getWidth(), original.getHeight(), VELOCITY_FACTOR);
     }
 
     @Override
     public void calculateFitness() {
-        image = new BufferedImage(original.getWidth(), original.getHeight(), original.getType());
+        image = ImageUtils.deepCopy(previousImage);
         Graphics2D graphics = image.createGraphics();
-        for (AbstractVelocityShape velocityShape : velocityShapes) {
-            velocityShape.getShape().draw(graphics);
-        }
+        velocityShape.getShape().draw(graphics);
         graphics.dispose();
         fitness = ImageUtils.calcImageDiff(image);
         latch.countdown();
@@ -57,14 +50,13 @@ public class Particle implements IEvolutionarySample {
 
     @Override
     public void evolve(IEvolutionarySample globalBest) {
-        for (int i = 0; i < velocityShapes.length; i++) {
-            velocityShapes[i].update(personalBest.getVelocityShapes()[i].getShape(),
-                    ((Particle) globalBest).getVelocityShapes()[i].getShape());
-        }
+        velocityShape.update(personalBest.getVelocityShape().getShape(),
+                ((Particle) globalBest).getVelocityShape().getShape());
+
     }
 
-    private AbstractVelocityShape[] getVelocityShapes() {
-        return velocityShapes;
+    private VelocityShape getVelocityShape() {
+        return velocityShape;
     }
 
     double getFitness() {
@@ -75,11 +67,13 @@ public class Particle implements IEvolutionarySample {
         return image;
     }
 
-    Particle cloneParticle(){
-        Particle newParticle = new Particle(original,shapeType,latch);
-        newParticle.velocityShapes = Arrays.copyOf(velocityShapes, velocityShapes.length);
+    Particle cloneParticle() {
+        Particle newParticle = new Particle(original, previousImage, shapeType, latch);
+        newParticle.velocityShape = new VelocityShape(shapeType);
+        newParticle.velocityShape.setShape(velocityShape.getShape());
+        newParticle.velocityShape.setVelocity(velocityShape.getVelocity());
         newParticle.fitness = fitness;
         newParticle.image = image;
-        return  newParticle;
+        return newParticle;
     }
 }

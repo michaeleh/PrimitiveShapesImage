@@ -8,6 +8,7 @@ import java.awt.image.BufferedImage;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
+import static algorithms.PSO.PSOConstants.MAX_ITERATIONS;
 import static algorithms.PSO.PSOConstants.MAX_PARTICLES;
 
 public class Swarm implements IEvolutionaryGroup {
@@ -15,12 +16,14 @@ public class Swarm implements IEvolutionaryGroup {
     private HistoryBest historyBest;
     private ExecutorService executor = Executors.newCachedThreadPool();
     private ObserverLatch latch;
+    private int iterationWithoutProgress = 0;
 
-    Swarm(BufferedImage original, EShapeType shapeType) {
+    Swarm(BufferedImage original,BufferedImage previousImage, EShapeType shapeType) {
         swarm = new Particle[MAX_PARTICLES];
         latch = new ObserverLatch();
+
         for (int i = 0; i < MAX_PARTICLES; i++) {
-            swarm[i] = new Particle(original, shapeType, latch);
+            swarm[i] = new Particle(original,previousImage, shapeType, latch);
         }
         historyBest = new HistoryBest();
     }
@@ -39,17 +42,17 @@ public class Swarm implements IEvolutionaryGroup {
             executor.submit(particle::calculateFitness);
         }
         latch.await();
+        iterationWithoutProgress++;
         setBest();
     }
 
     private void setBest() {
-        double localBest = 0;
         for (Particle particle : swarm) {
             double fitness = particle.getFitness();
-            if (localBest < fitness){
-                localBest = fitness;
+            if (fitness > historyBest.getFitness()){
+                historyBest.setBest(fitness, particle);
+                this.iterationWithoutProgress = 0;
             }
-            historyBest.setIfBest(fitness, particle);
         }
     }
 
@@ -61,11 +64,14 @@ public class Swarm implements IEvolutionaryGroup {
     }
 
     BufferedImage getTotalBest() {
-//        return swarm[5].getImage();
         return historyBest.getImage();
     }
 
     void close() {
         executor.shutdownNow();
+    }
+
+    boolean isDone() {
+        return iterationWithoutProgress > MAX_ITERATIONS;
     }
 }

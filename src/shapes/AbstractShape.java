@@ -8,7 +8,7 @@ import properties.Scale;
 import java.awt.*;
 
 public abstract class AbstractShape<T> {
-
+    protected int maxWidth, maxHeight;
     protected ILocation<T> location;
     protected Orientation orientation;
     protected Scale scale = new Scale();
@@ -35,4 +35,11 @@ public abstract class AbstractShape<T> {
         init(width, height, 1);
     }
 
+    public int getMaxWidth() {
+        return maxWidth;
+    }
+
+    public int getMaxHeight() {
+        return maxHeight;
+    }
 }

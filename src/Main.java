@@ -8,7 +8,8 @@ import java.io.IOException;
 
 public class Main {
     public static void main(String[] args) throws IOException {
-        ImageUtils imageUtils = new ImageUtils("C:\\michael\\work\\Dss\\marlin.jpg");
+        long start = System.currentTimeMillis();
+        ImageUtils imageUtils = new ImageUtils("C:\\michael\\work\\Dss\\mona.jpg");
         BufferedImage image = imageUtils.readImage();
         IOptimizationAlgorithm optimizationAlgorithm = EOptimizationTypes.PSO.getAlgorithmImpl();
         EShapeType eShapeType = EShapeType.CIRCLE;
@@ -17,6 +18,7 @@ public class Main {
         System.out.println("Best similar: "+ImageUtils.calcImageDiff(newImage));
 
         imageUtils.writeImage(newImage);
+        System.out.println(System.currentTimeMillis()-start);
 
     }
 }

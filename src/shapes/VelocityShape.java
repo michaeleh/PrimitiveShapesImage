@@ -6,11 +6,11 @@ import utils.NumberUtils;
 
 import static algorithms.PSO.PSOConstants.*;
 
-public class AbstractVelocityShape {
+public class VelocityShape {
     private AbstractShape shape;
     private AbstractShape velocity;
 
-    public AbstractVelocityShape(EShapeType shapeType) {
+    public VelocityShape(EShapeType shapeType) {
         shape = shapeType.getShape();
         velocity = shapeType.getShape();
     }
@@ -69,9 +69,9 @@ public class AbstractVelocityShape {
         shape.getColor().setBlue(NumberUtils.clampColor(newBlueValue));
         shape.getColor().setGreen(NumberUtils.clampColor(newGreenValue));
         shape.getColor().setAlpha(NumberUtils.clampColor(newAlphaValue));
-        shape.getScale().setValue(NumberUtils.clampCanvas(newScale));
-        shape.getLocation().setX(NumberUtils.clampCanvas(newShapeX));
-        shape.getLocation().setY(NumberUtils.clampCanvas(newShapeY));
+        shape.getScale().setValue(NumberUtils.clamp(newScale,0,shape.getMaxWidth()));
+        shape.getLocation().setX(NumberUtils.clamp(newShapeX,0,shape.getMaxWidth()));
+        shape.getLocation().setY(NumberUtils.clamp(newShapeY,0,shape.getMaxHeight()));
     }
 
     private int calculateNewVelocity(int value, int velocity, int personalBest, int globalBest) {
@@ -79,5 +79,13 @@ public class AbstractVelocityShape {
                 + C1 * NumberUtils.randBetween0and1() * (personalBest - value)
                 + C2 * NumberUtils.randBetween0and1() * (globalBest - value));
 
+    }
+
+    public void setShape(AbstractShape shape) {
+        this.shape = shape;
+    }
+
+    public void setVelocity(AbstractShape velocity) {
+        this.velocity = velocity;
     }
 }

@@ -6,12 +6,11 @@ class HistoryBest {
     private double fitness = 0;
     private Particle best;
 
-    void setIfBest(double score, Particle best) {
-        if (fitness < score) {
-            fitness = score;
-            this.best = best.cloneParticle();
-            System.out.println("New Best: " + fitness);
-        }
+    void setBest(double score, Particle best) {
+        fitness = score;
+        this.best = best.cloneParticle();
+        System.out.println("New Best: " + fitness);
+
     }
 
     BufferedImage getImage() {
@@ -20,5 +19,9 @@ class HistoryBest {
 
     Particle getBest() {
         return best;
+    }
+
+    public double getFitness() {
+        return fitness;
     }
 }

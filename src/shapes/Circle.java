@@ -20,13 +20,11 @@ public class Circle extends AbstractShape<Integer> {
 
     }
 
-    private boolean isValid() {
-        return color.isValid() && location.isValid() && scale.isValid();
-    }
-
     @Override
     public void init(int width, int height, int factor) {
-        this.scale.setValue(NumberUtils.randInt(MIN_IMAGE_COORDINATE, Math.max(width, height) / factor));
+        this.maxHeight = height;
+        this.maxWidth = width;
+        this.scale.setValue(NumberUtils.randInt(MIN_IMAGE_COORDINATE, Math.min(width, height) / (10)));
         this.location.setX(NumberUtils.randInt(MIN_IMAGE_COORDINATE, width / factor));
         this.location.setY(NumberUtils.randInt(MIN_IMAGE_COORDINATE, height / factor));
         this.color.setRed(NumberUtils.randInt(CHANNEL_MIN, CHANNEL_MAX / factor));

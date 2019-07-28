@@ -4,6 +4,8 @@ import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.image.BufferedImage;
+import java.awt.image.ColorModel;
+import java.awt.image.WritableRaster;
 import java.io.File;
 import java.io.IOException;
 
@@ -13,6 +15,8 @@ public class ImageUtils {
     private static JFrame frame;
     private String imgPath;
     private static int[] imageVector;
+
+
     public ImageUtils(String imgPath) {
         this.imgPath = imgPath;
     }
@@ -26,13 +30,12 @@ public class ImageUtils {
     public void writeImage(BufferedImage image) throws IOException {
         String[] nameSplit = imgPath.split(FILE_SPLIT_FORMAT);
         String name = nameSplit[0] + IMAGE_SUFFIX;
-        String format = nameSplit[1];
         ImageIO.write(image, IMAGE_FORMAT, new File(name + "." + IMAGE_FORMAT));
     }
 
     public static double calcImageDiff(BufferedImage img) {
         int[] asVector = toVector(img);
-        return cosineSimilarity(asVector,imageVector);
+        return cosineSimilarity(asVector, imageVector);
     }
 
     private static int[] toVector(BufferedImage img) {
@@ -75,5 +78,36 @@ public class ImageUtils {
         frame.pack();
         frame.setVisible(true);
 
+    }
+
+    public static BufferedImage deepCopy(BufferedImage bi) {
+        ColorModel cm = bi.getColorModel();
+        boolean isAlphaPremultiplied = cm.isAlphaPremultiplied();
+        WritableRaster raster = bi.copyData(null);
+        return new BufferedImage(cm, raster, isAlphaPremultiplied, null);
+    }
+
+    public static Color getAvgColor(BufferedImage image) {
+//        long redBucket = 0;
+//        long greenBucket = 0;
+//        long blueBucket = 0;
+//        long pixelCount = 0;
+//
+//        for (int y = 0; y < image.getHeight(); y++) {
+//            for (int x = 0; x < image.getWidth(); x++) {
+//                Color c = new Color(image.getRGB(x, y));
+//                pixelCount++;
+//                redBucket += c.getRed();
+//                greenBucket += c.getGreen();
+//                blueBucket += c.getBlue();
+//                // does alpha matter?
+//            }
+//        }
+//
+//        int red = (int) (redBucket / pixelCount);
+//        int green = (int) (greenBucket / pixelCount);
+//        int blue = (int) (blueBucket / pixelCount);
+//        return new Color(red, green, blue);
+        return new Color(image.getRGB(0,0));
     }
 }
