@@ -5,6 +5,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.awt.image.ColorModel;
+import java.awt.image.DataBuffer;
 import java.awt.image.WritableRaster;
 import java.io.File;
 import java.io.IOException;
@@ -14,8 +15,7 @@ import static algorithms.PSO.PSOConstants.*;
 public class ImageUtils {
     private static JFrame frame;
     private String imgPath;
-    private static int[] imageVector;
-
+    private static DataBuffer originalDataBuffer;
 
     public ImageUtils(String imgPath) {
         this.imgPath = imgPath;
@@ -23,7 +23,7 @@ public class ImageUtils {
 
     public BufferedImage readImage() throws IOException {
         BufferedImage image = ImageIO.read(new File(imgPath));
-        imageVector = toVector(image);
+        originalDataBuffer = image.getRaster().getDataBuffer();
         return image;
     }
 
@@ -34,36 +34,16 @@ public class ImageUtils {
     }
 
     public static double calcImageDiff(BufferedImage img) {
-        int[] asVector = toVector(img);
-        return cosineSimilarity(asVector, imageVector);
-    }
-
-    private static int[] toVector(BufferedImage img) {
-        int width = img.getWidth();
-        int height = img.getHeight();
-
-        int[] img1asVector = new int[height * width * 3];
-        int index = 0;
-        for (int i = 0; i < height; i++) {
-            for (int j = 0; j < width; j++) {
-                Color color1 = new Color(img.getRGB(i, j));
-                img1asVector[index] = color1.getRed();
-                img1asVector[index + 1] = color1.getBlue();
-                img1asVector[index + 2] = color1.getGreen();
-                index = index + 3;
-            }
-        }
-        return img1asVector;
-    }
-
-    private static double cosineSimilarity(int[] vectorA, int[] vectorB) {
+        DataBuffer dataBuffer = img.getRaster().getDataBuffer();
         double dotProduct = 0.0;
         double normA = 0.0;
         double normB = 0.0;
-        for (int i = 0; i < vectorA.length; i++) {
-            dotProduct += vectorA[i] * vectorB[i];
-            normA += Math.pow(vectorA[i], 2);
-            normB += Math.pow(vectorB[i], 2);
+        for (int i = 0; i < originalDataBuffer.getSize(); i++) {
+            int originalElement = originalDataBuffer.getElem(i);
+            int dataElement = dataBuffer.getElem(i);
+            dotProduct += originalElement * dataElement;
+            normA += Math.pow(originalElement, 2);
+            normB += Math.pow(dataElement, 2);
         }
         return dotProduct / (Math.sqrt(normA) * Math.sqrt(normB));
     }
