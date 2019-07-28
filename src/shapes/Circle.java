@@ -16,7 +16,7 @@ public class Circle extends AbstractShape<Integer> {
     @Override
     public void draw(Graphics2D graphics2D) {
             graphics2D.setPaint(color.toObj());
-            graphics2D.fillOval(location.getX(), location.getY(), scale.getValue(), scale.getValue());
+            graphics2D.fillOval(location.getX(), location.getY(), scaleX.getValue(), scaleY.getValue());
 
     }
 
@@ -24,7 +24,8 @@ public class Circle extends AbstractShape<Integer> {
     public void init(int width, int height, int factor) {
         this.maxHeight = height;
         this.maxWidth = width;
-        this.scale.setValue(NumberUtils.randInt(MIN_IMAGE_COORDINATE, Math.min(width, height) / (10)));
+        this.scaleX.setValue(NumberUtils.randInt(MIN_IMAGE_COORDINATE, Math.min(width, height) / (10)));
+        this.scaleY.setValue(NumberUtils.randInt(MIN_IMAGE_COORDINATE, Math.min(width, height) / (10)));
         this.location.setX(NumberUtils.randInt(MIN_IMAGE_COORDINATE, width / factor));
         this.location.setY(NumberUtils.randInt(MIN_IMAGE_COORDINATE, height / factor));
         this.color.setRed(NumberUtils.randInt(CHANNEL_MIN, CHANNEL_MAX / factor));

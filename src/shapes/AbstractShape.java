@@ -11,7 +11,8 @@ public abstract class AbstractShape<T> {
     protected int maxWidth, maxHeight;
     protected ILocation<T> location;
     protected Orientation orientation;
-    protected Scale scale = new Scale();
+    protected Scale scaleX = new Scale();
+    protected Scale scaleY = new Scale();
     protected Color color = new Color();
 
     public ILocation<T> getLocation() {
@@ -23,8 +24,8 @@ public abstract class AbstractShape<T> {
     }
 
 
-    public Scale getScale() {
-        return scale;
+    public Scale getScaleX() {
+        return scaleX;
     }
 
     public abstract void draw(Graphics2D graphics2D);
@@ -41,5 +42,9 @@ public abstract class AbstractShape<T> {
 
     public int getMaxHeight() {
         return maxHeight;
+    }
+
+    public Scale getScaleY() {
+        return scaleY;
     }
 }

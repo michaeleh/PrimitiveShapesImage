@@ -21,22 +21,17 @@ public class PSO implements IEvolutionaryGroup, IOptimizationAlgorithm {
         graphics.setColor(ImageUtils.getAvgColor(original));
         graphics.fillRect(0,0,original.getWidth(),original.getHeight());
         graphics.dispose();
-        int iteration = 1;
         for (int shapes = 0; shapes < MAX_SHAPES; shapes++) {
-            System.out.println("Shape: " + (shapes + 1));
+            System.out.println("Shapes: "+shapes);
             swarm = new Swarm(original, image, shape);
             init();
-
-            while (!swarm.isDone() && iteration<= MAX_ITERATIONS) {
-                System.out.println("Iteration: " + iteration++);
+            while (!swarm.isDone()) {
                 calculateFitness();
                 image = swarm.getTotalBest();
                 ImageUtils.display(image);
                 evolve();
             }
             swarm.close();
-            iteration = 0;
-
         }
         return image;
     }

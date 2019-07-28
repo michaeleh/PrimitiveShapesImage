@@ -33,9 +33,13 @@ public class VelocityShape {
         ILocation<Integer> personalBestLocation = personalBest.getLocation();
         ILocation<Integer> globalBestLocation = globalBest.getLocation();
 
-        int newScaleVelocity = calculateNewVelocity(shape.getScale().getValue(), velocity.getScale().getValue(),
-                personalBest.getScale().getValue(), globalBest.getScale().getValue());
-        int newScale = newScaleVelocity + shape.getScale().getValue();
+        int newScaleXVelocity = calculateNewVelocity(shape.getScaleX().getValue(), velocity.getScaleX().getValue(),
+                personalBest.getScaleX().getValue(), globalBest.getScaleX().getValue());
+        int newScaleX = newScaleXVelocity + shape.getScaleX().getValue();
+
+        int newScaleYVelocity = calculateNewVelocity(shape.getScaleY().getValue(), velocity.getScaleY().getValue(),
+                personalBest.getScaleY().getValue(), globalBest.getScaleY().getValue());
+        int newScaleY = newScaleYVelocity + shape.getScaleY().getValue();
 
         int newBlueVelocity = calculateNewVelocity(shapeColor.getBlue(), velocityColor.getBlue(), personalBestColor.getBlue(), globalBestColor.getBlue());
         int newBlueValue = newBlueVelocity + shapeColor.getBlue();
@@ -58,7 +62,8 @@ public class VelocityShape {
         int newShapeY = newShapeYVelocity + shapeLocation.getY();
 
 
-        velocity.getScale().setValue(newScaleVelocity);
+        velocity.getScaleX().setValue(newScaleXVelocity);
+        velocity.getScaleY().setValue(newScaleYVelocity);
         velocity.getColor().setRed(newRedVelocity);
         velocity.getColor().setBlue(newBlueVelocity);
         velocity.getColor().setGreen(newGreenVelocity);
@@ -69,7 +74,8 @@ public class VelocityShape {
         shape.getColor().setBlue(NumberUtils.clampColor(newBlueValue));
         shape.getColor().setGreen(NumberUtils.clampColor(newGreenValue));
         shape.getColor().setAlpha(NumberUtils.clampColor(newAlphaValue));
-        shape.getScale().setValue(NumberUtils.clamp(newScale,0,shape.getMaxWidth()));
+        shape.getScaleX().setValue(NumberUtils.clamp(newScaleX,0,shape.getMaxWidth()));
+        shape.getScaleY().setValue(NumberUtils.clamp(newScaleY,0,shape.getMaxWidth()));
         shape.getLocation().setX(NumberUtils.clamp(newShapeX,0,shape.getMaxWidth()));
         shape.getLocation().setY(NumberUtils.clamp(newShapeY,0,shape.getMaxHeight()));
     }
