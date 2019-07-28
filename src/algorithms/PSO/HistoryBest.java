@@ -3,7 +3,7 @@ package algorithms.PSO;
 import java.awt.image.BufferedImage;
 
 class HistoryBest {
-    private double fitness = 0;
+    private double fitness = Double.MAX_VALUE;
     private Particle best;
 
     void setBest(double score, Particle best) {

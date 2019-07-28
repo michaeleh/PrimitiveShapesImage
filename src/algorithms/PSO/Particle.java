@@ -42,7 +42,7 @@ public class Particle implements IEvolutionarySample {
         graphics.dispose();
         fitness = ImageUtils.calcImageDiff(image);
         latch.countdown();
-        if (personalBest == null || personalBest.getFitness() < fitness) {
+        if (personalBest == null || personalBest.getFitness() > fitness) {
             personalBest = cloneParticle();
         }
 

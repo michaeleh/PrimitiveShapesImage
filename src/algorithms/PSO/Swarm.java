@@ -49,7 +49,7 @@ public class Swarm implements IEvolutionaryGroup {
     private void setBest() {
         for (Particle particle : swarm) {
             double fitness = particle.getFitness();
-            if (fitness > historyBest.getFitness()){
+            if (fitness < historyBest.getFitness()){
                 historyBest.setBest(fitness, particle);
                 this.iterationWithoutProgress = 0;
             }

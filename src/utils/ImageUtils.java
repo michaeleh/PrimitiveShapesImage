@@ -35,17 +35,13 @@ public class ImageUtils {
 
     public static double calcImageDiff(BufferedImage img) {
         DataBuffer dataBuffer = img.getRaster().getDataBuffer();
-        double dotProduct = 0.0;
-        double normA = 0.0;
-        double normB = 0.0;
+        double diff = 0;
         for (int i = 0; i < originalDataBuffer.getSize(); i++) {
             int originalElement = originalDataBuffer.getElem(i);
             int dataElement = dataBuffer.getElem(i);
-            dotProduct += originalElement * dataElement;
-            normA += Math.pow(originalElement, 2);
-            normB += Math.pow(dataElement, 2);
+            diff += Math.pow(originalElement-dataElement,2);
         }
-        return dotProduct / (Math.sqrt(normA) * Math.sqrt(normB));
+        return Math.sqrt(diff/originalDataBuffer.getSize());
     }
 
 
