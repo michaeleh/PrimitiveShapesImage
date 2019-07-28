@@ -18,7 +18,8 @@ public class Main {
         System.out.println("Best similar: "+ImageUtils.calcImageDiff(newImage));
 
         imageUtils.writeImage(newImage);
-        System.out.println(System.currentTimeMillis()-start);
+        float millis = System.currentTimeMillis() - start;
+        System.out.println(millis/(1000 * 60));
 
     }
 }
