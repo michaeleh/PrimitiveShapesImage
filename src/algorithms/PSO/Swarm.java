@@ -43,8 +43,12 @@ public class Swarm implements IEvolutionaryGroup {
     }
 
     private void setBest() {
+        double localBest = 0;
         for (Particle particle : swarm) {
             double fitness = particle.getFitness();
+            if (localBest < fitness){
+                localBest = fitness;
+            }
             historyBest.setIfBest(fitness, particle);
         }
     }
@@ -57,7 +61,7 @@ public class Swarm implements IEvolutionaryGroup {
     }
 
     BufferedImage getTotalBest() {
-//        return swarm[10].getImage();
+//        return swarm[5].getImage();
         return historyBest.getImage();
     }
 

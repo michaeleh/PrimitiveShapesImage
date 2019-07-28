@@ -1,7 +1,7 @@
 import algorithms.EOptimizationTypes;
 import algorithms.IOptimizationAlgorithm;
-import utils.ImageUtils;
 import shapes.EShapeType;
+import utils.ImageUtils;
 
 import java.awt.image.BufferedImage;
 import java.io.IOException;
@@ -14,6 +14,8 @@ public class Main {
         EShapeType eShapeType = EShapeType.CIRCLE;
 
         BufferedImage newImage = optimizationAlgorithm.recreateFromPrimitive(image, eShapeType);
+        System.out.println("Best similar: "+ImageUtils.calcImageDiff(newImage));
+
         imageUtils.writeImage(newImage);
 
     }

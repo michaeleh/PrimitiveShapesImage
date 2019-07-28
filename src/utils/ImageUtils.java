@@ -12,13 +12,15 @@ import static algorithms.PSO.PSOConstants.*;
 public class ImageUtils {
     private static JFrame frame;
     private String imgPath;
-
+    private static int[] imageVector;
     public ImageUtils(String imgPath) {
         this.imgPath = imgPath;
     }
 
     public BufferedImage readImage() throws IOException {
-        return ImageIO.read(new File(imgPath));
+        BufferedImage image = ImageIO.read(new File(imgPath));
+        imageVector = toVector(image);
+        return image;
     }
 
     public void writeImage(BufferedImage image) throws IOException {
@@ -28,26 +30,41 @@ public class ImageUtils {
         ImageIO.write(image, IMAGE_FORMAT, new File(name + "." + IMAGE_FORMAT));
     }
 
-    public static double calcImageDiff(BufferedImage img1, BufferedImage img2) {
-        int width = img1.getWidth();
-        int height = img1.getHeight();
+    public static double calcImageDiff(BufferedImage img) {
+        int[] asVector = toVector(img);
+        return cosineSimilarity(asVector,imageVector);
+    }
 
-        long diff = 0;
-        for (int y = 0; y < height; y++) {
-            for (int x = 0; x < width; x++) {
-                diff += pixelDiff(img1.getRGB(x, y), img2.getRGB(x, y));
+    private static int[] toVector(BufferedImage img) {
+        int width = img.getWidth();
+        int height = img.getHeight();
+
+        int[] img1asVector = new int[height * width * 3];
+        int index = 0;
+        for (int i = 0; i < height; i++) {
+            for (int j = 0; j < width; j++) {
+                Color color1 = new Color(img.getRGB(i, j));
+                img1asVector[index] = color1.getRed();
+                img1asVector[index + 1] = color1.getBlue();
+                img1asVector[index + 2] = color1.getGreen();
+                index = index + 3;
             }
         }
-        return Math.sqrt(diff/(3 * width * height));
+        return img1asVector;
     }
 
-    private static long pixelDiff(int rgb1, int rgb2) {
-        Color color1 = new Color(rgb1);
-        Color color2 = new Color(rgb2);
-        return (long) (Math.pow(color1.getRed() - color2.getRed(),2)
-                        + Math.pow(color1.getGreen() - color2.getGreen(),2)
-                        + Math.pow(color1.getBlue() - color2.getBlue(),2));
+    private static double cosineSimilarity(int[] vectorA, int[] vectorB) {
+        double dotProduct = 0.0;
+        double normA = 0.0;
+        double normB = 0.0;
+        for (int i = 0; i < vectorA.length; i++) {
+            dotProduct += vectorA[i] * vectorB[i];
+            normA += Math.pow(vectorA[i], 2);
+            normB += Math.pow(vectorB[i], 2);
+        }
+        return dotProduct / (Math.sqrt(normA) * Math.sqrt(normB));
     }
+
 
     public static void display(BufferedImage img) {
         if (frame == null) {

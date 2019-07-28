@@ -10,7 +10,7 @@ public class Scale {
     }
 
     public void setValue(int value) {
-        this.value = NumberUtils.clampColor(value);
+        this.value = value;
     }
 
     @Override

@@ -17,12 +17,12 @@ public class CenterLocation implements ILocation<Integer> {
 
     @Override
     public void setX(Integer x) {
-        this.x = NumberUtils.clampCanvas(x);
+        this.x = x;
     }
 
     @Override
     public void setY(Integer y) {
-        this.y = NumberUtils.clampCanvas(y);
+        this.y = y;
     }
 
     @Override

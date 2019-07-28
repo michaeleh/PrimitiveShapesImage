@@ -6,5 +6,7 @@ public interface ILocation<T> {
     void setX(T x);
     void setY(T y);
 
+
+
     boolean isValid();
 }

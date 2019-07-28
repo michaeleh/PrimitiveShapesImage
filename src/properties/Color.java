@@ -13,19 +13,19 @@ public class Color {
     }
 
     public void setRed(int red) {
-        this.red = NumberUtils.clampColor(red);
+        this.red = red;
     }
 
     public void setGreen(int green) {
-        this.green = NumberUtils.clampColor(green);
+        this.green = green;
     }
 
     public void setBlue(int blue) {
-        this.blue = NumberUtils.clampColor(blue);
+        this.blue = blue;
     }
 
     public void setAlpha(int alpha) {
-        this.alpha = NumberUtils.clampColor(alpha);
+        this.alpha = alpha;
     }
 
     public int getRed() {

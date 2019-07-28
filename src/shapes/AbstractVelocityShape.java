@@ -65,13 +65,13 @@ public class AbstractVelocityShape {
         velocity.getColor().setAlpha(newAlphaVelocity);
         velocity.getLocation().setX(newShapeXVelocity);
         velocity.getLocation().setY(newShapeYVelocity);
-        shape.getColor().setRed(newRedValue);
-        shape.getColor().setBlue(newBlueValue);
-        shape.getColor().setGreen(newGreenValue);
-        shape.getColor().setAlpha(newAlphaValue);
-        shape.getScale().setValue(newScale);
-        shape.getLocation().setX(newShapeX);
-        shape.getLocation().setY(newShapeY);
+        shape.getColor().setRed(NumberUtils.clampColor(newRedValue));
+        shape.getColor().setBlue(NumberUtils.clampColor(newBlueValue));
+        shape.getColor().setGreen(NumberUtils.clampColor(newGreenValue));
+        shape.getColor().setAlpha(NumberUtils.clampColor(newAlphaValue));
+        shape.getScale().setValue(NumberUtils.clampCanvas(newScale));
+        shape.getLocation().setX(NumberUtils.clampCanvas(newShapeX));
+        shape.getLocation().setY(NumberUtils.clampCanvas(newShapeY));
     }
 
     private int calculateNewVelocity(int value, int velocity, int personalBest, int globalBest) {

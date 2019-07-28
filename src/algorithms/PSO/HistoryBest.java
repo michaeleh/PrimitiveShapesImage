@@ -3,11 +3,11 @@ package algorithms.PSO;
 import java.awt.image.BufferedImage;
 
 class HistoryBest {
-    private double fitness = Double.MAX_VALUE;
+    private double fitness = 0;
     private Particle best;
 
     void setIfBest(double score, Particle best) {
-        if (fitness > score) {
+        if (fitness < score) {
             fitness = score;
             this.best = best.cloneParticle();
             System.out.println("New Best: " + fitness);
