@@ -9,8 +9,6 @@ class HistoryBest {
     void setBest(double score, Particle best) {
         fitness = score;
         this.best = best.cloneParticle();
-        System.out.println("New Best: " + fitness);
-
     }
 
     BufferedImage getImage() {
