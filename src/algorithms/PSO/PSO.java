@@ -8,7 +8,6 @@ import utils.ImageUtils;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 
-import static algorithms.PSO.PSOConstants.MAX_ITERATIONS;
 import static algorithms.PSO.PSOConstants.MAX_SHAPES;
 
 public class PSO implements IEvolutionaryGroup, IOptimizationAlgorithm {
@@ -19,10 +18,10 @@ public class PSO implements IEvolutionaryGroup, IOptimizationAlgorithm {
         BufferedImage image = new BufferedImage(original.getWidth(), original.getHeight(), original.getType());
         Graphics2D graphics = image.createGraphics();
         graphics.setColor(ImageUtils.getAvgColor(original));
-        graphics.fillRect(0,0,original.getWidth(),original.getHeight());
+        graphics.fillRect(0, 0, original.getWidth(), original.getHeight());
         graphics.dispose();
-        for (int shapes = 0; shapes < MAX_SHAPES; shapes++) {
-            System.out.println("Shapes: "+shapes);
+        for (int shapesIndex = 0; shapesIndex < MAX_SHAPES; shapesIndex++) {
+            System.out.println("Shapes: " + shapesIndex);
             swarm = new Swarm(original, image, shape);
             init();
             while (!swarm.isDone()) {
