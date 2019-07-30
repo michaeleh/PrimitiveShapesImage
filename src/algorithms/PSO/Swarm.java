@@ -5,6 +5,7 @@ import shapes.EShapeType;
 import utils.ObserverLatch;
 
 import java.awt.image.BufferedImage;
+import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
@@ -12,13 +13,14 @@ import static algorithms.PSO.PSOConstants.MAX_ITERATIONS;
 import static algorithms.PSO.PSOConstants.MAX_PARTICLES;
 
 public class Swarm implements IEvolutionaryGroup {
+    private final ObserverLatch psoCycleLatch;
     private Particle[] swarm;
     private HistoryBest historyBest;
     private ExecutorService executor = Executors.newCachedThreadPool();
     private ObserverLatch latch;
     private int iterationWithoutProgress = 0;
 
-    Swarm(BufferedImage original,BufferedImage previousImage, EShapeType shapeType) {
+    Swarm(BufferedImage original, BufferedImage previousImage, EShapeType shapeType, ObserverLatch psoCycleLatch) {
         swarm = new Particle[MAX_PARTICLES];
         latch = new ObserverLatch();
 
@@ -26,6 +28,7 @@ public class Swarm implements IEvolutionaryGroup {
             swarm[i] = new Particle(original,previousImage, shapeType, latch);
         }
         historyBest = new HistoryBest();
+        this.psoCycleLatch = psoCycleLatch;
     }
 
     @Override
@@ -44,6 +47,7 @@ public class Swarm implements IEvolutionaryGroup {
         latch.await();
         iterationWithoutProgress++;
         setBest();
+        psoCycleLatch.countdown();
     }
 
     private void setBest() {
@@ -63,8 +67,8 @@ public class Swarm implements IEvolutionaryGroup {
         }
     }
 
-    BufferedImage getTotalBest() {
-        return historyBest.getImage();
+    HistoryBest getTotalBest() {
+        return historyBest;
     }
 
     void close() {
