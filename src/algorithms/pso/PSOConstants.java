@@ -13,7 +13,7 @@ public final class PSOConstants {
     public static final String FILE_SPLIT_FORMAT = "\\.";
     public static final String IMAGE_FORMAT = "png";
     public static final String IMAGE_SUFFIX = "_primitive";
-    static final int NUM_PARTICLES = 180;
+    static final int NUM_PARTICLES = 100;
     static final int VELOCITY_FACTOR = 10;
     public static final double W = 0.4;
     public static final double C1 = 2;

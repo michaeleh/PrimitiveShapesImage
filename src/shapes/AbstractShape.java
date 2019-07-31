@@ -1,8 +1,8 @@
 package shapes;
 
 import properties.Color;
-import properties.Position;
 import properties.Orientation;
+import properties.Position;
 import properties.Scale;
 import utils.NumbersUtils;
 
@@ -86,9 +86,19 @@ public abstract class AbstractShape {
 
     /**
      * get location init value specific for each shape.
+     *
      * @param maxBound max value
-     * @param factor of scale down value
+     * @param factor   of scale down value
      * @return array of point represents location
      */
-    protected abstract int[] getLocationInitValue(int maxBound, int factor);
+    private int[] getLocationInitValue(int maxBound, int factor) {
+        int numOfPointsInPosition = getNumOfPointsInPosition();
+        int[] position = new int[numOfPointsInPosition];
+        for (int i = 0; i < numOfPointsInPosition; i++) {
+            position[i] = NumbersUtils.randInt(MIN_IMAGE_COORDINATE, maxBound) / factor;
+        }
+        return position;
+    }
+
+    protected abstract int getNumOfPointsInPosition();
 }

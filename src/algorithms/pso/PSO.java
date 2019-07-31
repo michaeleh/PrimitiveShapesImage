@@ -21,6 +21,7 @@ public class PSO implements IOptimizationAlgorithm {
 
         // until max shapes has reached
         for (int shapesIndex = 0; shapesIndex < MAX_SHAPES; shapesIndex++) {
+            System.out.println("Shape: " + shapesIndex);
             IEvolutionaryGroup swarm = new Swarm(original, image, shape);
             swarm.init();
             // while swarm is still optimizing
