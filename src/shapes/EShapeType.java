@@ -1,10 +1,13 @@
 package shapes;
 
+/**
+ * Enum of shapes we support
+ */
 public enum EShapeType {
-    CIRCLE {
+    OVAL {
         @Override
         public AbstractShape getShape() {
-            return new Circle();
+            return new Oval();
         }
     };
 

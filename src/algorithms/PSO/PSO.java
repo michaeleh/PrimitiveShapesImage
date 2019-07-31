@@ -29,9 +29,9 @@ public class PSO implements IEvolutionaryGroup, IOptimizationAlgorithm {
             while (!swarm.isDone()) {
                 calculateFitness();
                 image = swarm.getTotalBestImage();
+                ImageUtils.display(image);
                 evolve();
             }
-            ImageUtils.display(image);
             swarm.close();
         }
         return image;

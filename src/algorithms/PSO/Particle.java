@@ -55,7 +55,7 @@ public class Particle implements IEvolutionarySample {
         Graphics2D graphics = image.createGraphics();
         velocityShape.getShape().draw(graphics);
         graphics.dispose();
-        fitness = ImageUtils.calcImageDiff(image);
+        fitness = ImageUtils.calcImageDiff(image,original);
 
         // if this iteration is the particles personal best.
         if (personalBest == null || personalBest.getFitness() > fitness) {

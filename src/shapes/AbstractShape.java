@@ -1,50 +1,94 @@
 package shapes;
 
 import properties.Color;
-import properties.ILocation;
+import properties.Position;
 import properties.Orientation;
 import properties.Scale;
+import utils.NumbersUtils;
 
 import java.awt.*;
 
-public abstract class AbstractShape<T> {
-    protected int maxWidth, maxHeight;
-    protected ILocation<T> location;
-    protected Orientation orientation;
-    protected Scale scaleX = new Scale();
-    protected Scale scaleY = new Scale();
-    protected Color color = new Color();
+import static algorithms.PSO.PSOConstants.*;
 
-    public ILocation<T> getLocation() {
-        return location;
+/**
+ * Abstract shape class extended by implementation of shape
+ */
+public abstract class AbstractShape {
+    private int maxWidth, maxHeight;
+    Position position = new Position();
+    private Orientation orientation = new Orientation();
+    Scale scaleX = new Scale();
+    Scale scaleY = new Scale();
+    Color color = new Color();
+
+    Position getPosition() {
+        return position;
     }
 
-    public Color getColor() {
+    Color getColor() {
         return color;
     }
 
 
-    public Scale getScaleX() {
+    Scale getScaleX() {
         return scaleX;
     }
 
+    /**
+     * draw the shape on image's graphics
+     *
+     * @param graphics2D to draw the shape on
+     */
     public abstract void draw(Graphics2D graphics2D);
 
-    public abstract void init(int width, int height, int factor);
+    /**
+     * init shape attributes with factor
+     *
+     * @param width  of the image
+     * @param height of the image
+     * @param factor to scale down
+     */
+    public void init(int width, int height, int factor) {
+        this.maxHeight = height;
+        this.maxWidth = width;
+        this.scaleX.setValue(NumbersUtils.randInt(MIN_IMAGE_COORDINATE, width / factor));
+        this.scaleY.setValue(NumbersUtils.randInt(MIN_IMAGE_COORDINATE, height / factor));
+        this.position.setX(getLocationInitValue(width, factor));
+        this.position.setY(getLocationInitValue(height, factor));
+        this.color.setRed(NumbersUtils.randInt(CHANNEL_MIN, CHANNEL_MAX / factor));
+        this.color.setBlue(NumbersUtils.randInt(CHANNEL_MIN, CHANNEL_MAX / factor));
+        this.color.setGreen(NumbersUtils.randInt(CHANNEL_MIN, CHANNEL_MAX / factor));
+        this.color.setAlpha(NumbersUtils.randInt(CHANNEL_MIN, CHANNEL_MAX / factor));
+        this.orientation.setAngle(NumbersUtils.randInt(ANGLE_MIN, ANGLE_MAX) / factor);
+    }
 
+    /**
+     * init shape attributes without factor
+     *
+     * @param width  of the image
+     * @param height of the image
+     */
     public void init(int width, int height) {
         init(width, height, 1);
     }
 
-    public int getMaxWidth() {
+    int getMaxWidth() {
         return maxWidth;
     }
 
-    public int getMaxHeight() {
+    int getMaxHeight() {
         return maxHeight;
     }
 
-    public Scale getScaleY() {
+    Scale getScaleY() {
         return scaleY;
     }
+
+    /**
+     * get location init value specific for each shape.
+     * @param maxBound max value
+     * @param factor of scale down value
+     * @return array of point represents location
+     */
+    protected abstract int[] getLocationInitValue(int maxBound, int factor);
 }

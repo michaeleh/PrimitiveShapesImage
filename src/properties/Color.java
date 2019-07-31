@@ -1,13 +1,18 @@
 package properties;
 
-import utils.NumberUtils;
-
+/**
+ * Color representation of RGB, alpha
+ */
 public class Color {
     private int red;
     private int green;
     private int blue;
     private int alpha;
 
+    /**
+     * builds a color object to set the drawn shape to
+     * @return color obj from rgba
+     */
     public java.awt.Color toObj() {
         return new java.awt.Color(red, green, blue, alpha);
     }
@@ -44,17 +49,4 @@ public class Color {
         return alpha;
     }
 
-    @Override
-    public String toString() {
-        return "Color{" +
-                "red=" + red +
-                ", green=" + green +
-                ", blue=" + blue +
-                ", alpha=" + alpha +
-                '}';
-    }
-
-    public boolean isValid() {
-        return red > 0 && red < 255 && green > 0 && green < 255 && blue > 0 && blue < 255 && alpha > 0 && alpha < 255;
-    }
 }

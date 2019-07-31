@@ -1,7 +1,8 @@
 package properties;
 
-import utils.NumberUtils;
-
+/**
+ * scale of the shape
+ */
 public class Scale {
     private int value;
 
@@ -13,14 +14,4 @@ public class Scale {
         this.value = value;
     }
 
-    @Override
-    public String toString() {
-        return "Scale{" +
-                "value=" + value +
-                '}';
-    }
-
-    public boolean isValid() {
-        return value < 400 && value > 0;
-    }
 }
