@@ -1,6 +1,6 @@
-package algorithms.PSO;
+package algorithms.pso;
 
-import java.awt.image.BufferedImage;
+import algorithms.IEvolutionarySample;
 
 /**
  * History Best class stores the particle with the best fitness score
@@ -8,7 +8,7 @@ import java.awt.image.BufferedImage;
 class HistoryBest {
     // initiate with worst possible fitness
     private double fitness = Double.MAX_VALUE;
-    private Particle best;
+    private IEvolutionarySample best;
 
     /**
      * Setting new Best Particle
@@ -16,21 +16,13 @@ class HistoryBest {
      * @param score of the new particle
      * @param best  bew best particle
      */
-    void setBest(double score, Particle best) {
+    void setBest(double score, IEvolutionarySample best) {
         fitness = score;
-        this.best = best.cloneParticle();
+        this.best = best.cloneSample();
     }
 
-    /**
-     * Getting the best particle ever's image
-     *
-     * @return BufferedImage of best particle
-     */
-    BufferedImage getImage() {
-        return best.getImage();
-    }
 
-    Particle getBest() {
+    IEvolutionarySample getBest() {
         return best;
     }
 

@@ -9,7 +9,7 @@ import java.awt.image.WritableRaster;
 import java.io.File;
 import java.io.IOException;
 
-import static algorithms.PSO.PSOConstants.*;
+import static algorithms.pso.PSOConstants.*;
 
 /**
  * Image utilities of static functions
@@ -34,11 +34,11 @@ public final class ImageUtils {
     }
 
     /**
-     * calculate image difference using RMSE beween img1 and img2
+     * calculate image difference using Root Mean Squared Error between img1 and img2
      *
      * @param img1 Buffered Image
      * @param img2 Buffered Image
-     * @return RMSE between data buffer value
+     * @return Root Mean Squared Error between data buffer value
      */
     public static double calcImageDiff(BufferedImage img1, BufferedImage img2) {
         DataBuffer dataBuffer = img1.getRaster().getDataBuffer();
@@ -75,8 +75,8 @@ public final class ImageUtils {
      */
     public static BufferedImage deepCopy(BufferedImage image) {
         ColorModel cm = image.getColorModel();
-        boolean isAlphaPremultiplied = cm.isAlphaPremultiplied();
+        boolean isAlphaPreMultiplied = cm.isAlphaPremultiplied();
         WritableRaster raster = image.copyData(null);
-        return new BufferedImage(cm, raster, isAlphaPremultiplied, null);
+        return new BufferedImage(cm, raster, isAlphaPreMultiplied, null);
     }
 }

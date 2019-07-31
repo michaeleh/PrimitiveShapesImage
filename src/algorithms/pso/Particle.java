@@ -1,4 +1,4 @@
-package algorithms.PSO;
+package algorithms.pso;
 
 import algorithms.IEvolutionarySample;
 import shapes.EShapeType;
@@ -10,19 +10,20 @@ import java.awt.image.BufferedImage;
 import java.util.concurrent.BrokenBarrierException;
 import java.util.concurrent.CyclicBarrier;
 
-import static algorithms.PSO.PSOConstants.VELOCITY_FACTOR;
+import static algorithms.pso.PSOConstants.VELOCITY_FACTOR;
 
 /**
  * Particle class representing a particle in a swarm
  */
-public class Particle implements IEvolutionarySample {
+public class Particle implements IEvolutionarySample<BufferedImage> {
     private final CyclicBarrier cyclicBarrier;
     private final EShapeType shapeType;
     private VelocityShape velocityShape;
     private double fitness;
-    private BufferedImage image, original;
+    private BufferedImage image;
+    private final BufferedImage original;
     private Particle personalBest;
-    private BufferedImage previousImage;
+    private final BufferedImage previousImage;
 
     Particle(BufferedImage original, BufferedImage previousImage, EShapeType shapeType, CyclicBarrier cyclicBarrier) {
         velocityShape = new VelocityShape(shapeType);
@@ -55,11 +56,11 @@ public class Particle implements IEvolutionarySample {
         Graphics2D graphics = image.createGraphics();
         velocityShape.getShape().draw(graphics);
         graphics.dispose();
-        fitness = ImageUtils.calcImageDiff(image,original);
+        fitness = ImageUtils.calcImageDiff(image, original);
 
         // if this iteration is the particles personal best.
         if (personalBest == null || personalBest.getFitness() > fitness) {
-            personalBest = cloneParticle();
+            personalBest = (Particle) cloneSample();
         }
         try {
             cyclicBarrier.await();
@@ -81,24 +82,29 @@ public class Particle implements IEvolutionarySample {
                 ((Particle) globalBest).getVelocityShape().getShape());
     }
 
+    @Override
+    public BufferedImage getProduct() {
+        return image;
+    }
+
+
     private VelocityShape getVelocityShape() {
         return velocityShape;
     }
 
-    double getFitness() {
+    @Override
+    public double getFitness() {
         return fitness;
     }
 
-    BufferedImage getImage() {
-        return image;
-    }
 
     /**
      * Cloning current particle to avoid global and personal best overridden
      *
      * @return new particle with current particle's info
      */
-    Particle cloneParticle() {
+    @Override
+    public IEvolutionarySample<BufferedImage> cloneSample() {
         Particle newParticle = new Particle(original, previousImage, shapeType, cyclicBarrier);
         newParticle.velocityShape = new VelocityShape(shapeType);
         newParticle.velocityShape.setShape(velocityShape.getShape());

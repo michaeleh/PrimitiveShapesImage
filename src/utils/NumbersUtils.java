@@ -1,6 +1,6 @@
 package utils;
 
-import algorithms.PSO.PSOConstants;
+import algorithms.pso.PSOConstants;
 
 import java.util.Arrays;
 import java.util.concurrent.ThreadLocalRandom;

@@ -1,6 +1,6 @@
 package algorithms;
 
-import algorithms.PSO.PSO;
+import algorithms.pso.PSO;
 
 /**
  * Enum to hold optimization algorithms and implantation we support

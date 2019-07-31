@@ -4,7 +4,7 @@ import utils.NumbersUtils;
 
 import java.awt.*;
 
-import static algorithms.PSO.PSOConstants.*;
+import static algorithms.pso.PSOConstants.*;
 
 /**
  * Oval implementation of abstract shape
@@ -31,11 +31,11 @@ public class Oval extends AbstractShape{
         return new int[]{NumbersUtils.randInt(MIN_IMAGE_COORDINATE, maxBound) / factor};
     }
 
-    public int getLocationX() {
+    private int getLocationX() {
         return position.getX()[0];
     }
 
-    public int getLocationY() {
+    private int getLocationY() {
         return position.getY()[0];
     }
 

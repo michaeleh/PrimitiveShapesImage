@@ -1,4 +1,4 @@
-package algorithms.PSO;
+package algorithms.pso;
 
 import algorithms.IEvolutionaryGroup;
 import algorithms.IOptimizationAlgorithm;
@@ -7,13 +7,12 @@ import utils.ImageUtils;
 
 import java.awt.image.BufferedImage;
 
-import static algorithms.PSO.PSOConstants.MAX_SHAPES;
+import static algorithms.pso.PSOConstants.MAX_SHAPES;
 
 /**
  * Particle Swarm Optimization algorithm cycle
  */
-public class PSO implements IEvolutionaryGroup, IOptimizationAlgorithm {
-    private Swarm swarm;
+public class PSO implements IOptimizationAlgorithm {
 
     @Override
     public BufferedImage recreateFromPrimitive(BufferedImage original, EShapeType shape) {
@@ -23,42 +22,19 @@ public class PSO implements IEvolutionaryGroup, IOptimizationAlgorithm {
         // until max shapes has reached
         for (int shapesIndex = 0; shapesIndex < MAX_SHAPES; shapesIndex++) {
             System.out.println("Shapes: " + shapesIndex);
-            swarm = new Swarm(original, image, shape);
-            init();
+            IEvolutionaryGroup swarm = new Swarm(original, image, shape);
+            swarm.init();
             // while swarm is still optimizing
             while (!swarm.isDone()) {
-                calculateFitness();
-                image = swarm.getTotalBestImage();
+                swarm.calculateFitness();
+                image = (BufferedImage) swarm.getTotalBest().getProduct();
                 ImageUtils.display(image);
-                evolve();
+                swarm.evolve();
             }
             swarm.close();
         }
         return image;
     }
 
-    /**
-     * Initiate the swarm
-     */
-    @Override
-    public void init() {
-        swarm.init();
-    }
-
-    /**
-     * calculate the swarm fitness
-     */
-    @Override
-    public void calculateFitness() {
-        swarm.calculateFitness();
-    }
-
-    /**
-     * evolve the swarm
-     */
-    @Override
-    public void evolve() {
-        swarm.evolve();
-    }
 }
 

@@ -8,18 +8,18 @@ import utils.NumbersUtils;
 
 import java.awt.*;
 
-import static algorithms.PSO.PSOConstants.*;
+import static algorithms.pso.PSOConstants.*;
 
 /**
  * Abstract shape class extended by implementation of shape
  */
 public abstract class AbstractShape {
     private int maxWidth, maxHeight;
-    Position position = new Position();
-    private Orientation orientation = new Orientation();
-    Scale scaleX = new Scale();
-    Scale scaleY = new Scale();
-    Color color = new Color();
+    final Position position = new Position();
+    private final Orientation orientation = new Orientation();
+    final Scale scaleX = new Scale();
+    final Scale scaleY = new Scale();
+    final Color color = new Color();
 
     Position getPosition() {
         return position;

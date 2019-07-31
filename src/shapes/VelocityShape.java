@@ -4,7 +4,7 @@ import properties.Color;
 import properties.Position;
 import utils.NumbersUtils;
 
-import static algorithms.PSO.PSOConstants.*;
+import static algorithms.pso.PSOConstants.*;
 
 /**
  * Specific use of shape and its velocity per property

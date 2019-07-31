@@ -1,4 +1,4 @@
-package algorithms.PSO;
+package algorithms.pso;
 
 /**
  * Constant class with parameters for pso algorithm.
