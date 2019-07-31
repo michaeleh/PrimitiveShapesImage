@@ -65,11 +65,11 @@ public class VelocityShape {
         for (int i = 0; i < length; i++) {
             newShapeXVelocity[i] = calculateNewVelocity(shapePosition.getX()[i], velocityPosition.getX()[i],
                     personalBestPosition.getX()[i], globalBestPosition.getX()[i]);
-            newShapeX[i] = newShapeX[i] + newShapeXVelocity[i];
+            newShapeX[i] = shapePosition.getX()[i] + newShapeXVelocity[i];
 
             newShapeYVelocity[i] = calculateNewVelocity(shapePosition.getY()[i], velocityPosition.getY()[i],
                     personalBestPosition.getY()[i], globalBestPosition.getY()[i]);
-            newShapeY[i] = newShapeY[i] + newShapeYVelocity[i];
+            newShapeY[i] = shapePosition.getY()[i] + newShapeYVelocity[i];
         }
 
         velocity.getScaleX().setValue(newScaleXVelocity);
@@ -85,7 +85,7 @@ public class VelocityShape {
         shape.getColor().setGreen(NumbersUtils.clampColor(newGreenValue));
         shape.getColor().setAlpha(NumbersUtils.clampColor(newAlphaValue));
         shape.getScaleX().setValue(NumbersUtils.clamp(newScaleX, 0, shape.getMaxWidth()));
-        shape.getScaleY().setValue(NumbersUtils.clamp(newScaleY, 0, shape.getMaxWidth()));
+        shape.getScaleY().setValue(NumbersUtils.clamp(newScaleY, 0, shape.getMaxHeight()));
         shape.getPosition().setX(NumbersUtils.clamp(newShapeX, 0, shape.getMaxWidth()));
         shape.getPosition().setY(NumbersUtils.clamp(newShapeY, 0, shape.getMaxHeight()));
     }
