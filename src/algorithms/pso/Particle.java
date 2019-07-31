@@ -105,12 +105,12 @@ public class Particle implements IEvolutionarySample<BufferedImage> {
      */
     @Override
     public IEvolutionarySample<BufferedImage> cloneSample() {
-        Particle newParticle = new Particle(original, previousImage, shapeType, cyclicBarrier);
+        Particle newParticle = new Particle(original, previousImage, shapeType, null);
         newParticle.velocityShape = new VelocityShape(shapeType);
         newParticle.velocityShape.setShape(velocityShape.getShape());
         newParticle.velocityShape.setVelocity(velocityShape.getVelocity());
         newParticle.fitness = fitness;
-        newParticle.image = image;
+        newParticle.image = ImageUtils.deepCopy(image);
         return newParticle;
     }
 }

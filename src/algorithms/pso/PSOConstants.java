@@ -9,7 +9,7 @@ public final class PSOConstants {
     public static final int CHANNEL_MIN = 0;
     public static final int CHANNEL_MAX = 255;
     public static final int ANGLE_MIN = 0;
-    public static final int ANGLE_MAX = 255;
+    public static final int ANGLE_MAX = 360;
     public static final String FILE_SPLIT_FORMAT = "\\.";
     public static final String IMAGE_FORMAT = "png";
     public static final String IMAGE_SUFFIX = "_primitive";

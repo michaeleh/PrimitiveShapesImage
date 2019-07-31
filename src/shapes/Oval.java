@@ -7,7 +7,7 @@ import java.awt.*;
  */
 public class Oval extends AbstractShape {
 
-    public static final int SINGLE_CENTER_POSITION = 1;
+    private static final int SINGLE_CENTER_POSITION = 1;
 
     /**
      * Drawing oval
@@ -17,6 +17,7 @@ public class Oval extends AbstractShape {
     @Override
     public void draw(Graphics2D graphics2D) {
         graphics2D.setPaint(color.toObj());
+        graphics2D.rotate(Math.toRadians(orientation.getAngle()));
         graphics2D.fillOval(position.getX()[0], position.getY()[0], scaleX.getValue(), scaleY.getValue());
     }
 

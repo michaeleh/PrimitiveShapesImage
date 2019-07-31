@@ -9,6 +9,10 @@ import java.util.concurrent.ThreadLocalRandom;
  * Number utils class to wrap common function for readability
  */
 public final class NumbersUtils {
+
+    private NumbersUtils() {
+    }
+
     /**
      * random int in range
      *

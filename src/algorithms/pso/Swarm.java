@@ -47,7 +47,6 @@ public class Swarm implements IEvolutionaryGroup {
      **/
     @Override
     public void calculateFitness() {
-        fitnessBarrier.reset();
         for (IEvolutionarySample particle : swarm) {
             executor.submit(particle::calculateFitness);
         }

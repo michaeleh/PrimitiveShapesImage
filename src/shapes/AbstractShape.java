@@ -16,7 +16,7 @@ import static algorithms.pso.PSOConstants.*;
 public abstract class AbstractShape {
     private int maxWidth, maxHeight;
     final Position position = new Position();
-    private final Orientation orientation = new Orientation();
+    final Orientation orientation = new Orientation();
     final Scale scaleX = new Scale();
     final Scale scaleY = new Scale();
     final Color color = new Color();
@@ -51,15 +51,16 @@ public abstract class AbstractShape {
     public void init(int width, int height, int factor) {
         this.maxHeight = height;
         this.maxWidth = width;
-        this.scaleX.setValue(NumbersUtils.randInt(MIN_IMAGE_COORDINATE, width / factor));
-        this.scaleY.setValue(NumbersUtils.randInt(MIN_IMAGE_COORDINATE, height / factor));
-        this.position.setX(getLocationInitValue(width, factor));
-        this.position.setY(getLocationInitValue(height, factor));
+
+        this.scaleX.setValue(NumbersUtils.randInt(MIN_IMAGE_COORDINATE, Math.min(width, height) / factor));
+        this.scaleY.setValue(NumbersUtils.randInt(MIN_IMAGE_COORDINATE, Math.min(width, height) / factor));
         this.color.setRed(NumbersUtils.randInt(CHANNEL_MIN, CHANNEL_MAX / factor));
         this.color.setBlue(NumbersUtils.randInt(CHANNEL_MIN, CHANNEL_MAX / factor));
         this.color.setGreen(NumbersUtils.randInt(CHANNEL_MIN, CHANNEL_MAX / factor));
         this.color.setAlpha(NumbersUtils.randInt(CHANNEL_MIN, CHANNEL_MAX / factor));
-        this.orientation.setAngle(NumbersUtils.randInt(ANGLE_MIN, ANGLE_MAX) / factor);
+        this.position.setX(getLocationInitValue(width, factor));
+        this.position.setY(getLocationInitValue(height, factor));
+        this.orientation.setAngle(NumbersUtils.randInt(ANGLE_MIN, ANGLE_MAX / factor));
     }
 
     /**
@@ -82,6 +83,10 @@ public abstract class AbstractShape {
 
     Scale getScaleY() {
         return scaleY;
+    }
+
+    Orientation getOrientation() {
+        return orientation;
     }
 
     /**

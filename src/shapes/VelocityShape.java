@@ -72,6 +72,10 @@ public class VelocityShape {
             newShapeY[i] = shapePosition.getY()[i] + newShapeYVelocity[i];
         }
 
+        int newOrientationVelocity = calculateNewVelocity(shape.orientation.getAngle(), velocity.orientation.getAngle(),
+                personalBest.getOrientation().getAngle(), globalBest.getOrientation().getAngle());
+        int newOrientation = shape.orientation.getAngle() + newOrientationVelocity;
+
         velocity.getScaleX().setValue(newScaleXVelocity);
         velocity.getScaleY().setValue(newScaleYVelocity);
         velocity.getColor().setRed(newRedVelocity);
@@ -80,6 +84,7 @@ public class VelocityShape {
         velocity.getColor().setAlpha(newAlphaVelocity);
         velocity.getPosition().setX(newShapeXVelocity);
         velocity.getPosition().setY(newShapeYVelocity);
+        velocity.getOrientation().setAngle(newOrientationVelocity);
         shape.getColor().setRed(NumbersUtils.clampColor(newRedValue));
         shape.getColor().setBlue(NumbersUtils.clampColor(newBlueValue));
         shape.getColor().setGreen(NumbersUtils.clampColor(newGreenValue));
@@ -88,6 +93,7 @@ public class VelocityShape {
         shape.getScaleY().setValue(NumbersUtils.clamp(newScaleY, 0, shape.getMaxHeight()));
         shape.getPosition().setX(NumbersUtils.clamp(newShapeX, 0, shape.getMaxWidth()));
         shape.getPosition().setY(NumbersUtils.clamp(newShapeY, 0, shape.getMaxHeight()));
+        shape.getOrientation().setAngle(newOrientation);
     }
 
     private int calculateNewVelocity(int value, int velocity, int personalBest, int globalBest) {
