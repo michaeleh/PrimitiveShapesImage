@@ -29,8 +29,8 @@ public class PSO implements IOptimizationAlgorithm {
                 swarm.calculateFitness();
                 swarm.evolve();
             }
-            double swarmsFitness = swarm.getTotalBest().getFitness();
 
+            double swarmsFitness = swarm.getTotalBest().getFitness();
             if (swarmsFitness < bestFitness) {
                 bestFitness = swarmsFitness;
                 image = (BufferedImage) swarm.getTotalBest().getProduct();
@@ -39,6 +39,8 @@ public class PSO implements IOptimizationAlgorithm {
                 shapesIndex--;
                 System.out.println("retrying");
             }
+
+
             swarm.close();
         }
         return image;

@@ -3,9 +3,10 @@ package algorithms.pso;
 import algorithms.IEvolutionaryGroup;
 import algorithms.IEvolutionarySample;
 import shapes.EShapeType;
-import utils.ObserverLatch;
 
 import java.awt.image.BufferedImage;
+import java.util.concurrent.BrokenBarrierException;
+import java.util.concurrent.CyclicBarrier;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
@@ -19,14 +20,14 @@ public class Swarm implements IEvolutionaryGroup {
     private final IEvolutionarySample<BufferedImage>[] swarm;
     private final HistoryBest historyBest;
     private final ExecutorService executor = Executors.newCachedThreadPool();
-    private final ObserverLatch observerLatch;
+    private final CyclicBarrier cyclicBarrier;
     private int iterationWithoutProgress = 0;
 
     Swarm(BufferedImage original, BufferedImage previousImage, EShapeType shapeType) {
         swarm = new Particle[NUM_PARTICLES];
-        observerLatch = new ObserverLatch();
+        cyclicBarrier = new CyclicBarrier(NUM_PARTICLES + 1);
         for (int i = 0; i < NUM_PARTICLES; i++) {
-            swarm[i] = new Particle(original, previousImage, shapeType, observerLatch);
+            swarm[i] = new Particle(original, previousImage, shapeType, cyclicBarrier);
         }
         historyBest = new HistoryBest();
     }
@@ -46,12 +47,15 @@ public class Swarm implements IEvolutionaryGroup {
      **/
     @Override
     public void calculateFitness() {
-        observerLatch.init(NUM_PARTICLES);
         for (IEvolutionarySample particle : swarm) {
             executor.submit(particle::calculateFitness);
         }
         // wait for all particles to finish
-        observerLatch.await();
+        try {
+            cyclicBarrier.await();
+        } catch (InterruptedException | BrokenBarrierException e) {
+            e.printStackTrace();
+        }
 
         // progress number of iterations
         iterationWithoutProgress++;
