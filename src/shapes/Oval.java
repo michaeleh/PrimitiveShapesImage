@@ -6,6 +6,9 @@ import java.awt.*;
  * Oval implementation of abstract shape
  */
 public class Oval extends AbstractShape {
+
+    public static final int SINGLE_CENTER_POSITION = 1;
+
     /**
      * Drawing oval
      *
@@ -22,7 +25,7 @@ public class Oval extends AbstractShape {
      */
     @Override
     protected int getNumOfPointsInPosition() {
-        return 1;
+        return SINGLE_CENTER_POSITION;
     }
 
 }

@@ -28,9 +28,9 @@ public class PSO implements IOptimizationAlgorithm {
             while (!swarm.isDone()) {
                 swarm.calculateFitness();
                 image = (BufferedImage) swarm.getTotalBest().getProduct();
+                ImageUtils.display(image);
                 swarm.evolve();
             }
-            ImageUtils.display(image);
             swarm.close();
         }
         return image;

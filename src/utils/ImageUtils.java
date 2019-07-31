@@ -2,10 +2,9 @@ package utils;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
+import java.awt.*;
 import java.awt.image.BufferedImage;
-import java.awt.image.ColorModel;
 import java.awt.image.DataBuffer;
-import java.awt.image.WritableRaster;
 import java.io.File;
 import java.io.IOException;
 
@@ -74,9 +73,13 @@ public final class ImageUtils {
      * @return new image
      */
     public static BufferedImage deepCopy(BufferedImage image) {
-        ColorModel cm = image.getColorModel();
-        boolean isAlphaPreMultiplied = cm.isAlphaPremultiplied();
-        WritableRaster raster = image.copyData(null);
-        return new BufferedImage(cm, raster, isAlphaPreMultiplied, null);
+        BufferedImage clone = new BufferedImage(image.getWidth(),
+                image.getHeight(), image.getType());
+        Graphics2D g2d = clone.createGraphics();
+        g2d.drawImage(image, 0, 0, null);
+        g2d.dispose();
+        return clone;
+
+
     }
 }
