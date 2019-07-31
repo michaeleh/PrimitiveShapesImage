@@ -100,7 +100,7 @@ public abstract class AbstractShape {
         int numOfPointsInPosition = getNumOfPointsInPosition();
         int[] position = new int[numOfPointsInPosition];
         for (int i = 0; i < numOfPointsInPosition; i++) {
-            position[i] = NumbersUtils.randInt(MIN_IMAGE_COORDINATE, maxBound) / factor;
+            position[i] = NumbersUtils.randInt(MIN_IMAGE_COORDINATE, maxBound / factor);
         }
         return position;
     }
