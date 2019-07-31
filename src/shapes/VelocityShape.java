@@ -89,11 +89,11 @@ public class VelocityShape {
         shape.getColor().setBlue(NumbersUtils.clampColor(newBlueValue));
         shape.getColor().setGreen(NumbersUtils.clampColor(newGreenValue));
         shape.getColor().setAlpha(NumbersUtils.clampColor(newAlphaValue));
-        shape.getScaleX().setValue(NumbersUtils.clamp(newScaleX, 0, shape.getMaxWidth()));
-        shape.getScaleY().setValue(NumbersUtils.clamp(newScaleY, 0, shape.getMaxHeight()));
-        shape.getPosition().setX(NumbersUtils.clamp(newShapeX, 0, shape.getMaxWidth()));
-        shape.getPosition().setY(NumbersUtils.clamp(newShapeY, 0, shape.getMaxHeight()));
-        shape.getOrientation().setAngle(newOrientation);
+        shape.getScaleX().setValue(NumbersUtils.clamp(newScaleX, MIN_IMAGE_COORDINATE, shape.getMaxWidth()));
+        shape.getScaleY().setValue(NumbersUtils.clamp(newScaleY, MIN_IMAGE_COORDINATE, shape.getMaxHeight()));
+        shape.getPosition().setX(NumbersUtils.clamp(newShapeX, MIN_IMAGE_COORDINATE, shape.getMaxWidth()));
+        shape.getPosition().setY(NumbersUtils.clamp(newShapeY, MIN_IMAGE_COORDINATE, shape.getMaxHeight()));
+        shape.getOrientation().setAngle(NumbersUtils.clamp(newOrientation, ANGLE_MIN, ANGLE_MAX));
     }
 
     private int calculateNewVelocity(int value, int velocity, int personalBest, int globalBest) {
