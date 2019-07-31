@@ -1,10 +1,6 @@
 package shapes;
 
-import utils.NumbersUtils;
-
 import java.awt.*;
-
-import static algorithms.pso.PSOConstants.MIN_IMAGE_COORDINATE;
 
 /**
  * Oval implementation of abstract shape
@@ -18,7 +14,7 @@ public class Oval extends AbstractShape {
     @Override
     public void draw(Graphics2D graphics2D) {
         graphics2D.setPaint(color.toObj());
-        graphics2D.fillOval(getLocationX(), getLocationY(), scaleX.getValue(), scaleY.getValue());
+        graphics2D.fillOval(position.getX()[0], position.getY()[0], scaleX.getValue(), scaleY.getValue());
     }
 
     /**
@@ -28,14 +24,5 @@ public class Oval extends AbstractShape {
     protected int getNumOfPointsInPosition() {
         return 1;
     }
-
-    private int getLocationX() {
-        return position.getX()[0];
-    }
-
-    private int getLocationY() {
-        return position.getY()[0];
-    }
-
 
 }
