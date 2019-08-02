@@ -11,7 +11,7 @@ class Main {
     public static void main(String[] args) throws IOException {
         long start = System.currentTimeMillis();
 
-        String imgPath = "C:\\michael\\work\\Dss\\Demo\\mona.jpg";
+        String imgPath = "C:\\michael\\work\\Dss\\Demo\\marlin.jpg";
         BufferedImage image = ImageIO.read(new File(imgPath));
 
         EOptimizationTypes optimizationAlgorithm = EOptimizationTypes.PSO;
