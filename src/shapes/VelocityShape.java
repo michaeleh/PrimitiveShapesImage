@@ -37,6 +37,7 @@ public class VelocityShape {
      */
     public void update(AbstractShape personalBest, AbstractShape globalBest) {
         // mapping each shape
+        ValidPropertiesBounds bounds = new ValidPropertiesBounds(shape.getMaxWidth(), shape.getMaxHeight());
         ShapeMapper personalBestMapper = new ShapeMapper(personalBest);
         ShapeMapper globalBestMapper = new ShapeMapper(globalBest);
         ShapeMapper shapeMapper = new ShapeMapper(shape);
@@ -52,8 +53,8 @@ public class VelocityShape {
             // get new value
             int newValue = shapeMapper.getValue(property) + newVelocity;
             // set new shape value with clamp to its valid bounds
-            int minBound = shapeMapper.getMinBound(property);
-            int maxBound = shapeMapper.getMaxBound(property);
+            int minBound = bounds.getMinBound(property);
+            int maxBound = bounds.getMaxBound(property);
             shapeMapper.setValue(property, NumbersUtils.clamp(newValue, minBound, maxBound));
             // set new velocity
             velocityMapper.setValue(property, newVelocity);
@@ -71,7 +72,7 @@ public class VelocityShape {
                 // calculate its new value
                 int newValue = shapeMapper.getValue(property, i) + newVelocity;
                 // set its new value considering max bound clamp
-                int maxBound = shapeMapper.getMaxBound(property);
+                int maxBound = bounds.getMaxBound(property);
                 shapeMapper.setValue(property, i, NumbersUtils.clamp(newValue, MIN_IMAGE_COORDINATE, maxBound));
                 // setting velocity new value
                 velocityMapper.setValue(property, i, newVelocity);
