@@ -102,6 +102,14 @@ public class VelocityShape {
         shape.getOrientation().setAngle(NumbersUtils.clamp(newOrientation, ANGLE_MIN, ANGLE_MAX));
     }
 
+    /**
+     * calculating new velocity using particle swarm optimization equation
+     * @param value of new shape
+     * @param velocity of new shape
+     * @param personalBest of current particle
+     * @param globalBest of all swarm
+     * @return new velocity
+     */
     private int calculateNewVelocity(int value, int velocity, int personalBest, int globalBest) {
         return (int) (W * velocity
                 + C1 * NumbersUtils.randBetween0and1() * (personalBest - value)
