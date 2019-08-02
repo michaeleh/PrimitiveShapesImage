@@ -29,7 +29,7 @@ public class ParticleSwarmOptimization implements IOptimizationAlgorithm {
                 swarm.calculateFitness();
                 swarm.evolve();
             }
-
+            // don't progress if fitness not improved
             double swarmsFitness = swarm.getTotalBest().getFitness();
             if (swarmsFitness < bestFitness) {
                 bestFitness = swarmsFitness;
