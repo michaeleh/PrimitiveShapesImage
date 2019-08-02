@@ -15,6 +15,7 @@ public final class PSOConstants {
     public static final String IMAGE_SUFFIX = "_primitive";
     static final int NUM_PARTICLES = 400;
     static final int VELOCITY_FACTOR = 10;
+    public static final int SCALE_FACTOR = 10;
     public static final double W = 0.4;
     public static final double C1 = 2;
     public static final double C2 = 2;

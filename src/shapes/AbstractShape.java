@@ -52,14 +52,15 @@ public abstract class AbstractShape {
         this.maxHeight = height;
         this.maxWidth = width;
 
-        this.scaleX.setValue(NumbersUtils.randInt(MIN_IMAGE_COORDINATE, Math.min(width, height) / factor));
-        this.scaleY.setValue(NumbersUtils.randInt(MIN_IMAGE_COORDINATE, Math.min(width, height) / factor));
+        final int maxBound = Math.min(width, height) / (factor * SCALE_FACTOR);
+        this.scaleX.setValue(NumbersUtils.randInt(MIN_IMAGE_COORDINATE, maxBound));
+        this.scaleY.setValue(NumbersUtils.randInt(MIN_IMAGE_COORDINATE, maxBound));
+        this.position.setX(getLocationInitValue(width, factor));
+        this.position.setY(getLocationInitValue(height, factor));
         this.color.setRed(NumbersUtils.randInt(CHANNEL_MIN, CHANNEL_MAX / factor));
         this.color.setBlue(NumbersUtils.randInt(CHANNEL_MIN, CHANNEL_MAX / factor));
         this.color.setGreen(NumbersUtils.randInt(CHANNEL_MIN, CHANNEL_MAX / factor));
         this.color.setAlpha(NumbersUtils.randInt(CHANNEL_MIN, CHANNEL_MAX / factor));
-        this.position.setX(getLocationInitValue(width, factor));
-        this.position.setY(getLocationInitValue(height, factor));
         this.orientation.setAngle(NumbersUtils.randInt(ANGLE_MIN, ANGLE_MAX / factor));
     }
 
