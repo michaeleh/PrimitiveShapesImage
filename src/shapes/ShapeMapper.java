@@ -11,9 +11,9 @@ import java.util.Map;
  * Shape mapper of {@link AbstractShape}
  */
 class ShapeMapper {
-    private Map<EPrimitiveProperty, Integer> propertyMap;
-    private Map<EPositionProperty, int[]> positionPropertyMap;
-    private AbstractShape shape;
+    private final Map<EPrimitiveProperty, Integer> propertyMap;
+    private final Map<EPositionProperty, int[]> positionPropertyMap;
+    private final AbstractShape shape;
 
     /**
      * Build map by property  type to value

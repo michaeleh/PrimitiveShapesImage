@@ -1,8 +1,5 @@
 package utils;
 
-import algorithms.pso.PSOConstants;
-
-import java.util.Arrays;
 import java.util.concurrent.ThreadLocalRandom;
 
 /**
@@ -32,16 +29,6 @@ public final class NumbersUtils {
     }
 
     /**
-     * Clamp Color value in valid range
-     *
-     * @param value of color
-     * @return color in valid range
-     */
-    public static int clampColor(int value) {
-        return clamp(value, PSOConstants.CHANNEL_MIN, PSOConstants.CHANNEL_MAX);
-    }
-
-    /**
      * clamp a number in range
      *
      * @param value to be clamped
@@ -53,14 +40,4 @@ public final class NumbersUtils {
         return Math.max(Math.min(value, max), min);
     }
 
-    /**
-     * clamp array to boundaries
-     * @param values of array of integers
-     * @param min value to clamp
-     * @param max value
-     * @return array with every element is clamped
-     */
-    public static int[] clamp(int[] values, int min, int max) {
-        return Arrays.stream(values).map(value -> clamp(value, min, max)).toArray();
-    }
 }
