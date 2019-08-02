@@ -1,6 +1,6 @@
 package algorithms;
 
-import algorithms.pso.PSO;
+import algorithms.pso.ParticleSwarmOptimization;
 
 /**
  * Enum to hold optimization algorithms and implantation we support
@@ -9,7 +9,7 @@ public enum EOptimizationTypes {
     PSO{
         @Override
         public IOptimizationAlgorithm getAlgorithmImpl() {
-            return new PSO();
+            return new ParticleSwarmOptimization();
         }
     };
     public abstract IOptimizationAlgorithm getAlgorithmImpl();

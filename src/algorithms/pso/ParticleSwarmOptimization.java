@@ -12,7 +12,7 @@ import static algorithms.pso.PSOConstants.MAX_SHAPES;
 /**
  * Particle Swarm Optimization algorithm cycle
  */
-public class PSO implements IOptimizationAlgorithm {
+public class ParticleSwarmOptimization implements IOptimizationAlgorithm {
 
     @Override
     public BufferedImage recreateFromPrimitive(BufferedImage original, EShapeType shape) {

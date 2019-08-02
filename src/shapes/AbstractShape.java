@@ -14,6 +14,7 @@ import static algorithms.pso.PSOConstants.*;
  * Abstract shape class extended by implementation of shape
  */
 public abstract class AbstractShape {
+    private static final int NO_FACTOR = 1;
     private int maxWidth, maxHeight;
     final Position position = new Position();
     final Orientation orientation = new Orientation();
@@ -71,7 +72,7 @@ public abstract class AbstractShape {
      * @param height of the image
      */
     public void init(int width, int height) {
-        init(width, height, 1);
+        init(width, height, NO_FACTOR);
     }
 
     int getMaxWidth() {

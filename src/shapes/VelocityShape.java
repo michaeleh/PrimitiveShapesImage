@@ -26,6 +26,12 @@ public class VelocityShape {
         return velocity;
     }
 
+    /**
+     * Updating shape properties considering it velocity
+     * for each property we are computing
+     * @param personalBest {@link algorithms.IEvolutionarySample} personal best
+     * @param globalBest {@link algorithms.IEvolutionarySample} all time best
+     */
     public void update(AbstractShape personalBest, AbstractShape globalBest) {
         Color personalBestColor = personalBest.getColor();
         Color globalBestColor = globalBest.getColor();
