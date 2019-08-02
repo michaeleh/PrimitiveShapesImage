@@ -7,11 +7,19 @@ import properties.EPrimitiveProperty;
 import java.util.HashMap;
 import java.util.Map;
 
+/**
+ * Shape mapper of {@link AbstractShape}
+ */
 class ShapeMapper {
     private Map<EPrimitiveProperty, Integer> propertyMap;
     private Map<EPositionProperty, int[]> positionPropertyMap;
     private AbstractShape shape;
 
+    /**
+     * Build map by property  type to value
+     * And a map for position type
+     * @param shape to build from
+     */
     ShapeMapper(AbstractShape shape) {
         this.shape = shape;
         this.propertyMap = new HashMap<>();
@@ -44,10 +52,18 @@ class ShapeMapper {
         positionPropertyMap.get(property)[index] = value;
     }
 
+    /**
+     * @return the length of position length for the first axis (all are the same)
+     */
     int getPositionLength() {
         return positionPropertyMap.get(EPositionProperty.values()[0]).length;
     }
 
+    /**
+     * Getting max valid value for a property
+     * @param primitiveProperty a property to check
+     * @return max value
+     */
     int getMaxBound(EPrimitiveProperty primitiveProperty) {
         switch (primitiveProperty) {
             case RED:
@@ -65,6 +81,26 @@ class ShapeMapper {
         return Integer.MAX_VALUE;
     }
 
+    /**
+     * getting max bound for position
+     * @param property of position type
+     * @return max valid value for position
+     */
+    int getMaxBound(EPositionProperty property) {
+        switch (property) {
+            case X:
+                return shape.getMaxWidth();
+            case Y:
+                return shape.getMaxHeight();
+        }
+        return Math.min(shape.getMaxWidth(), shape.getMaxHeight());
+    }
+
+    /**
+     * Getting min valid value for a property
+     * @param primitiveProperty a property to check
+     * @return min value
+     */
     int getMinBound(EPrimitiveProperty primitiveProperty) {
         switch (primitiveProperty) {
             case RED:
@@ -81,7 +117,10 @@ class ShapeMapper {
         return Integer.MAX_VALUE;
     }
 
-
+    /**
+     * updating shape from map values
+     * @return updated shape
+     */
     AbstractShape toAbstractShape() {
         shape.getColor().setRed(propertyMap.get(EPrimitiveProperty.RED));
         shape.getColor().setGreen(propertyMap.get(EPrimitiveProperty.GREEN));
@@ -95,13 +134,4 @@ class ShapeMapper {
         return shape;
     }
 
-    int getMaxBound(EPositionProperty property) {
-        switch (property) {
-            case X:
-                return shape.getMaxWidth();
-            case Y:
-                return shape.getMaxHeight();
-        }
-        return Math.min(shape.getMaxWidth(), shape.getMaxHeight());
-    }
 }

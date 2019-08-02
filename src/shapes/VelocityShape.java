@@ -29,44 +29,55 @@ public class VelocityShape {
 
     /**
      * Updating shape properties considering it velocity
-     * for each property we are computing
+     * for each property we are computing its new velocity  from PSO equation
+     * and adding this velocity to current position thus gives us new position.
      *
      * @param personalBest {@link algorithms.IEvolutionarySample} personal best
      * @param globalBest   {@link algorithms.IEvolutionarySample} all time best
      */
     public void update(AbstractShape personalBest, AbstractShape globalBest) {
+        // mapping each shape
         ShapeMapper personalBestMapper = new ShapeMapper(personalBest);
         ShapeMapper globalBestMapper = new ShapeMapper(globalBest);
         ShapeMapper shapeMapper = new ShapeMapper(shape);
         ShapeMapper velocityMapper = new ShapeMapper(velocity);
 
+        // for each primitive properties
         EPrimitiveProperty[] properties = EPrimitiveProperty.values();
 
         for (EPrimitiveProperty property : properties) {
+            // get new velocity
             int newVelocity = calculateNewVelocity(shapeMapper.getValue(property), velocityMapper.getValue(property),
                     personalBestMapper.getValue(property), globalBestMapper.getValue(property));
+            // get new value
             int newValue = shapeMapper.getValue(property) + newVelocity;
-            shapeMapper.setValue(property,
-                    NumbersUtils.clamp(newValue, shapeMapper.getMinBound(property), shapeMapper.getMaxBound(property)));
+            // set new shape value with clamp to its valid bounds
+            int minBound = shapeMapper.getMinBound(property);
+            int maxBound = shapeMapper.getMaxBound(property);
+            shapeMapper.setValue(property, NumbersUtils.clamp(newValue, minBound, maxBound));
+            // set new velocity
             velocityMapper.setValue(property, newVelocity);
         }
 
+        // for each position property
         EPositionProperty[] positionProperties = EPositionProperty.values();
         for (EPositionProperty property : positionProperties) {
             int positionLength = shapeMapper.getPositionLength();
+            // for  each index of position vector
             for (int i = 0; i < positionLength; i++) {
-
+                // calculate its new velocity
                 int newVelocity = calculateNewVelocity(shapeMapper.getValue(property, i), velocityMapper.getValue(property, i),
                         personalBestMapper.getValue(property, i), globalBestMapper.getValue(property, i));
-
+                // calculate its new value
                 int newValue = shapeMapper.getValue(property, i) + newVelocity;
-                shapeMapper.setValue(property, i,
-                        NumbersUtils.clamp(newValue, MIN_IMAGE_COORDINATE, shapeMapper.getMaxBound(property)));
+                // set its new value considering max bound clamp
+                int maxBound = shapeMapper.getMaxBound(property);
+                shapeMapper.setValue(property, i, NumbersUtils.clamp(newValue, MIN_IMAGE_COORDINATE, maxBound));
+                // setting velocity new value
                 velocityMapper.setValue(property, i, newVelocity);
-
             }
         }
-
+        // updating shape and velocity from map
         shape = shapeMapper.toAbstractShape();
         velocity = velocityMapper.toAbstractShape();
 

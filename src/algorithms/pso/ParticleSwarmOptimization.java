@@ -39,8 +39,6 @@ public class ParticleSwarmOptimization implements IOptimizationAlgorithm {
                 shapesIndex--;
                 System.out.println("retrying");
             }
-
-
             swarm.close();
         }
         return image;
