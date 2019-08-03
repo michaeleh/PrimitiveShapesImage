@@ -21,7 +21,6 @@ public class ParticleSwarmOptimization implements IOptimizationAlgorithm {
         double bestFitness = Double.MAX_VALUE;
         // until max shapes has reached
         for (int shapesIndex = 0; shapesIndex < MAX_SHAPES; shapesIndex++) {
-            System.out.println("Shape: " + shapesIndex);
             IEvolutionaryGroup swarm = new Swarm(original, image, shape);
             swarm.init();
             // while swarm is still optimizing
@@ -34,7 +33,7 @@ public class ParticleSwarmOptimization implements IOptimizationAlgorithm {
             if (swarmsFitness < bestFitness) {
                 bestFitness = swarmsFitness;
                 image = (BufferedImage) swarm.getTotalBest().getProduct();
-                ImageUtils.display(image);
+                ImageUtils.display(image, "Shape: " + (shapesIndex+1));
             } else {
                 shapesIndex--;
                 System.out.println("retrying");

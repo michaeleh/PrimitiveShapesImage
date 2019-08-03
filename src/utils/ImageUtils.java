@@ -56,13 +56,14 @@ public final class ImageUtils {
      *
      * @param img to be displayed
      */
-    public static void display(BufferedImage img) {
+    public static void display(BufferedImage img,String title) {
         if (frame == null) {
             frame = new JFrame();
         }
         frame.getContentPane().removeAll();
         frame.getContentPane().add(new JLabel(new ImageIcon(img)));
         frame.pack();
+        frame.setTitle(title);
         frame.setVisible(true);
     }
 
