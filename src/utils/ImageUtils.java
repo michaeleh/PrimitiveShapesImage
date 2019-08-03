@@ -44,9 +44,9 @@ public final class ImageUtils {
         DataBuffer dataBuffer2 = img2.getRaster().getDataBuffer();
         double diff = 0;
         for (int i = 0; i < dataBuffer2.getSize(); i++) {
-            int originalElement = dataBuffer2.getElem(i);
             int dataElement = dataBuffer.getElem(i);
-            diff += Math.pow(originalElement - dataElement, 2);
+            int dataElement2 = dataBuffer2.getElem(i);
+            diff += (dataElement2 - dataElement) * (dataElement2 - dataElement);
         }
         return Math.sqrt(diff / dataBuffer2.getSize());
     }
