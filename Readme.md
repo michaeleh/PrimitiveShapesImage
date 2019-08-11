@@ -2,7 +2,9 @@
 
 In this project i am going to attempt to recreate an image using a primitive abstract shape.
 concretely using ellipses (up to 200).
+
 In each iteration we are going to find the best ellipse which minimize the RMSE with the original value using Partical Swarm Optimization Algorithm.
+
 After we found that ellipse we will draw it on top of the previos image and do the same thing again.
 
 ## Algorthim Description
@@ -21,4 +23,4 @@ After we found that ellipse we will draw it on top of the previos image and do t
 
 ### Starry Night
 <img src="https://raw.githubusercontent.com/michaeleh/PrimitiveShapesImage/master/resources/starry%20night/starry.jpg">
-<img src="https://raw.githubusercontent.com/michaeleh/PrimitiveShapesImage/master/resources/starry%20night/starry_primitive.png>"
+<img src="https://raw.githubusercontent.com/michaeleh/PrimitiveShapesImage/master/resources/starry%20night/starry_primitive.png">
