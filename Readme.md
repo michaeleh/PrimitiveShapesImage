@@ -8,6 +8,8 @@ In each iteration we are going to find the best ellipse which minimize the RMSE 
 After we found that ellipse we will draw it on top of the previos image and do the same thing again.
 
 ## Algorthim Description
+<img src="https://raw.githubusercontent.com/michaeleh/PrimitiveShapesImage/master/resources/algorithm%20description.png">
+<img src="https://raw.githubusercontent.com/michaeleh/PrimitiveShapesImage/master/resources/algorithm%20flow.png">
 
 ## Architecture
 <img src="https://raw.githubusercontent.com/michaeleh/PrimitiveShapesImage/master/resources/architecture.png"><img>
